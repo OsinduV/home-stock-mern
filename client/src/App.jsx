@@ -7,6 +7,7 @@ import SignIn from "./pages/SignIn.jsx";
 import SignUp from "./pages/SignUp.jsx";
 
 import Header from './components/Header.jsx';
+import EmailVerificationPage from './pages/EmailVerificationPage.jsx';
 
 export default function App() {
   return (
@@ -18,6 +19,10 @@ export default function App() {
         <Route path="/sign-up" element={<SignUp />} />
 
         <Route path="/about" element={<About />} />
+        <Route path="/verify-email" element={<EmailVerificationPage />} />
+
+
+
       </Routes>
     </BrowserRouter>
   );
