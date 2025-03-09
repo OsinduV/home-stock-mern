@@ -15,31 +15,35 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData), // Fixed typo here too
-      });
-      const data = await res.json();
-      if (data.success === false) {
-        setError(data.message);
-        setLoading(false);
-        return;
-      }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    setLoading(true);
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.message || "Something went wrong");
       setLoading(false);
-      setError(null);
-      navigate("/sign-in");
-    } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      return;
     }
-  };
+
+    setLoading(false);
+    setError(null);
+    setFormData({}); // Clear form data
+    navigate("/sign-in"); // Redirect to sign-in page
+  } catch (error) {
+    setLoading(false);
+    setError("Network error. Please check your connection and try again.");
+  }
+};
 
   return (
     <div className="max-w-lg p-3 mx-auto">
