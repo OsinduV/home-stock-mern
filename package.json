@@ -1,9 +1,16 @@
 {
-  "name": "estate-managment",
+  "name": "life-home-stock",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server/index.js",
+    "start": "node server/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
     "@reduxjs/toolkit": "^2.4.0",
     "axios": "^1.7.8",
@@ -13,8 +20,8 @@
     "cookieparser": "^0.1.0",
     "crypto": "^1.0.1",
     "dom": "^0.0.3",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "firebase": "^11.0.2",
     "js-tokens": "^4.0.0",
     "jsdom": "^25.0.1",
@@ -22,21 +29,14 @@
     "loose-envify": "^1.4.0",
     "mailtrap": "^3.4.0",
     "mongodb": "^6.11.0",
-    "mongoose": "^8.8.3",
+    "mongoose": "^8.12.1",
     "nodemailer": "^6.10.0",
-    "nodemon": "^3.1.7",
+    "nodemon": "^3.1.9",
     "react": "^18.3.1",
     "react-redux": "^9.1.2",
     "react-router": "^7.0.1",
     "redux-persist": "^6.0.0",
     "set-cookie-parser": "^2.7.1",
     "turbo-stream": "^2.4.0"
-  },
-  "scripts": {
-    "dev": "nodemon server/index.js",
-    "start": "node server/index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  }
 }
