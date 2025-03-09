@@ -28,14 +28,18 @@ export const signup = async (req, res, next) => {
 
     // Validate input fields
     if (!email || !username || !password) {
-      return res.status(400).json({ message: "All details are required" });
+    
+      return next(errorHandler(400, "All details are required"));
+      
     }
 
     // Check if the user already exists
     const userAlreadyExists = await User.findOne({ email });
 
     if (userAlreadyExists) {
-      return res.status(400).json({ message: "User already exists" });
+
+      return next(errorHandler(400,"User already exists"));
+     
     }
 
     // Hash the password
@@ -75,22 +79,20 @@ export const signup = async (req, res, next) => {
     });
 
     console.log("Verification Token:", verificationToken);
-
-    res.status(201).json({ message: "User created successfully!" });
+    return next(errorHandler(201, "User created successfully!"));
+  
   } catch (error) {
     console.error("Signup Error:", error);
 
     // Ensure we only delete the user if it was created
-    if (newUser?._id) {
-      await User.findByIdAndDelete(newUser._id);
-    }
+   
 
     next(error);
   }
 };
 
 
-export const verifyEmail = async (req, res) => {
+export const verifyEmail = async (req, res,next) => {
 const {code}=req.body;
 
 try{
@@ -103,10 +105,10 @@ try{
 
   if(!user)
   {
-    return res.status(400).json({
-      success:false,
-      message:"Invalid or expired verification code"
-    })
+    
+    return next(errorHandler(400, "Invalid or expired verification code "));
+
+    
   }
 user.isVarified=true;
 user.verificationToken=undefined;
@@ -119,15 +121,17 @@ await user.save();
    username:user.username,
    category: "Email Verification",
  });
- res.status(200).json({success:true,
-  message:'Email verified successfully',user
- })
+
+
+ return next(errorHandler(200, "Email verified successfully"));
 
 }
 catch(error)
 {
   console.log('error verified email',email);
-res.status(500).json({success:false,message:"user not verified server error"});
+
+
+return next(errorHandler(500, "user not verified server error"));
 }
 
 
@@ -220,9 +224,9 @@ export const forgotPassword = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: "User not found" });
+    
+
+        return next(errorHandler(400,"User not found"));
     }
 
     // Generate a secure reset token
@@ -244,22 +248,20 @@ export const forgotPassword = async (req, res, next) => {
       category: "Password Reset",
     });
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Password reset link sent to your email",
-      });
+  
+      return next(errorHandler(200, "Password reset link sent to your email"));
   } catch (error) {
     console.log("Error in forgotPassword:", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    
+
+    return next(errorHandler(500,"Internal server error"));
   }
 };
 
 
 
 
-export const resetPassword = async (req, res) => {
+export const resetPassword = async (req, res,next) => {
   try {
     const { token } = req.params;
     const {password}=req.body;
@@ -272,9 +274,9 @@ export const resetPassword = async (req, res) => {
 
     // Validate user & token
     if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid or expired reset token" });
+     
+
+        return next(errorHandler(400, "Invalid or expired reset token"));
     }
 
     // Hash new password
@@ -291,16 +293,39 @@ export const resetPassword = async (req, res) => {
     // Send success email (optional)
     await sendResetSuccessEmail({email:user.email});
 
-    res
-      .status(200)
-      .json({ success: true, message: "Password reset successfully" });
+   
+
+      return next(errorHandler(200, "Password reset successfully"));
   } catch (error) {
     console.log("Error in resetPassword:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Something went wrong. Please try again later.",
-      });
+    
+      return next(
+        errorHandler(500, "Something went wrong. Please try again later.")
+      );
   }
 };
+
+
+
+export const checkAuth=async(req,res,next)=>
+{
+  try {
+    const user=await User.findById(req._id).select("-password");
+
+    if(!user)
+    {
+      
+
+      return next(errorHandler(400, "User not found"));
+    }
+
+return next(errorHandler(200,"User found"));
+
+  } catch (error) {
+
+    console.log('Error in checkAuth',error);
+   
+    return next(errorHandler(400,"Error in checkAuth"))
+    
+  }
+}
