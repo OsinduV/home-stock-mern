@@ -5,7 +5,6 @@ import About from "./pages/About.jsx";
 import Profile from "./pages/Profile.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import SignUp from "./pages/SignUp.jsx";
-
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import EmailVerificationPage from './pages/EmailVerificationPage.jsx';
