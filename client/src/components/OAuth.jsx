@@ -12,8 +12,10 @@ const OAuth = () => {
   const handleGoogleClick = async () => {
     try {
       const provider = new GoogleAuthProvider();
+      // provider.setCustomParameters({prompt: 'select_account'})  //always ask select an acoount
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
+      // console.log(result);
 
       const res = await fetch("/api/auth/google", {
         method: "POST",
