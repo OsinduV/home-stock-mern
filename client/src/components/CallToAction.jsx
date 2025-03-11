@@ -1,0 +1,29 @@
+import { Button } from 'flowbite-react';
+
+export default function CallToAction() {
+  return (
+    <div className='flex flex-col sm:flex-row p-3 border border-teal-500 justify-center items-center rounded-tl-3xl rounded-br-3xl text-center'>
+        <div className="flex-1 justify-center flex flex-col">
+            <h2 className='text-2xl'>
+                Want to Manage Your Groceries And Essentials
+            </h2>
+            <p className='text-gray-500 my-2'>
+                Checkout Our Features
+            </p>
+            <Button gradientDuoTone='purpleToBlue' className='rounded-tl-xl rounded-bl-none'>
+                <a href="#" target='_blank' rel='noopener noreferrer'>
+                    Scan Grocery List
+                </a>
+            </Button>
+            <Button gradientDuoTone='purpleToPink' className='rounded-tl-xl rounded-bl-none my-2'>
+                <a href="#" target='_blank' rel='noopener noreferrer'>
+                    Manually Add Inventories
+                </a>
+            </Button>
+        </div>
+        <div className="p-7 flex-1">
+            <img src="https://img.freepik.com/free-photo/young-woman-using-home-technology_23-2149216654.jpg?t=st=1741689399~exp=1741692999~hmac=b9a16afa3fff30f25da13ac45ceeea075f4ba78fca4024f9de9fd85ace74855a&w=1380" />
+        </div>
+    </div>
+  )
+}
