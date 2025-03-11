@@ -1,27 +1,26 @@
-import { Alert, Button, Modal, ModalBody, TextInput } from 'flowbite-react';
-import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { Alert, Button, Modal, ModalBody, TextInput } from "flowbite-react";
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
-} from 'firebase/storage';
-import { app } from '../firebase';
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import {
-  // updateStart,
-  // updateSuccess,
-  // updateFailure,
-  // deleteUserStart,
-  // deleteUserSuccess,
-  // deleteUserFailure,
-  // signoutSuccess,
-} from '../redux/user/userSlice';
-import { useDispatch } from 'react-redux';
-import { HiOutlineExclamationCircle } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+} from "firebase/storage";
+import { app } from "../firebase";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import {// updateStart,
+// updateSuccess,
+// updateFailure,
+// deleteUserStart,
+// deleteUserSuccess,
+// deleteUserFailure,
+signOutUserSuccess
+} from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 export default function DashProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -35,7 +34,7 @@ export default function DashProfile() {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
   const filePickerRef = useRef();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -63,14 +62,14 @@ export default function DashProfile() {
     //     }
     //   }
     // }
-  //   setImageFileUploading(true);
+    //   setImageFileUploading(true);
     setImageFileUploadError(null);
     const storage = getStorage(app);
     const fileName = new Date().getTime() + imageFile.name;
     const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, imageFile); 
+    const uploadTask = uploadBytesResumable(storageRef, imageFile);
     uploadTask.on(
-      'state_changed', //track changes when we are uploading
+      "state_changed", //track changes when we are uploading
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -79,7 +78,7 @@ export default function DashProfile() {
       },
       (error) => {
         setImageFileUploadError(
-          'Could not upload image (File must be less than 2MB)'
+          "Could not upload image (File must be less than 2MB)"
         );
         setImageFileUploadProgress(null);
         setImageFile(null);
@@ -152,36 +151,38 @@ export default function DashProfile() {
   //   }
   // };
 
-  // const handleSignout = async () => {
-  //   try {
-  //     const res = await fetch('/api/user/signout', {
-  //       method: 'POST',
-  //     });
-  //     const data = await res.json();
-  //     if (!res.ok) {
-  //       console.log(data.message);
-  //     } else {
-  //       dispatch(signoutSuccess());
-  //     }
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
+  const handleSignout = async () => {
+    try {
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signOutUserSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  
   return (
-    <div className='max-w-lg mx-auto p-3 w-full'>
-      <h1 className='my-7 text-center font-semibold text-3xl'>Profile</h1>
-      <form 
-      // onSubmit={handleSubmit} 
-      className='flex flex-col gap-4'>
+    <div className="max-w-lg mx-auto p-3 w-full">
+      <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
+      <form
+        // onSubmit={handleSubmit}
+        className="flex flex-col gap-4"
+      >
         <input
-          type='file'
-          accept='image/*'
+          type="file"
+          accept="image/*"
           onChange={handleImageChange}
           ref={filePickerRef}
           hidden
         />
         <div
-          className='relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full'
+          className="relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full"
           onClick={() => filePickerRef.current.click()}
         >
           {imageFileUploadProgress && (
@@ -191,9 +192,9 @@ export default function DashProfile() {
               strokeWidth={5}
               styles={{
                 root: {
-                  width: '100%',
-                  height: '100%',
-                  position: 'absolute',
+                  width: "100%",
+                  height: "100%",
+                  position: "absolute",
                   top: 0,
                   left: 0,
                 },
@@ -207,54 +208,51 @@ export default function DashProfile() {
           )}
           <img
             src={imageFileUrl || currentUser.avatar}
-            alt='user'
+            alt="user"
             className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${
               imageFileUploadProgress &&
               imageFileUploadProgress < 100 &&
-              'opacity-60'
+              "opacity-60"
             }`}
           />
-        </div> 
+        </div>
         {imageFileUploadError && (
-          <Alert color='failure'>{imageFileUploadError}</Alert>
-        )} 
+          <Alert color="failure">{imageFileUploadError}</Alert>
+        )}
         <TextInput
-          type='text'
-          id='username'
-          placeholder='username'
+          type="text"
+          id="username"
+          placeholder="username"
           defaultValue={currentUser.username}
           onChange={handleChange}
         />
         <TextInput
-          type='email'
-          id='email'
-          placeholder='email'
+          type="email"
+          id="email"
+          placeholder="email"
           defaultValue={currentUser.email}
           onChange={handleChange}
         />
         <TextInput
-          type='password'
-          id='password'
-          placeholder='password'
+          type="password"
+          id="password"
+          placeholder="password"
           onChange={handleChange}
         />
         <Button
-          type='submit'
-          gradientDuoTone='purpleToBlue'
+          type="submit"
+          gradientDuoTone="purpleToBlue"
           outline
           // disabled={loading || imageFileUploading}
         >
-          {loading ? 'Loading...' : 'Update'}
+          {loading ? "Loading..." : "Update"}
         </Button>
-
       </form>
-      <div className='text-red-500 flex justify-between mt-5'>
-        <span onClick={() => setShowModal(true)} className='cursor-pointer'>
+      <div className="text-red-500 flex justify-between mt-5">
+        <span onClick={() => setShowModal(true)} className="cursor-pointer">
           Delete Account
         </span>
-        <span
-        //  onClick={handleSignout} 
-         className='cursor-pointer'>
+        <span onClick={handleSignout} className="cursor-pointer">
           Sign Out
         </span>
       </div>
