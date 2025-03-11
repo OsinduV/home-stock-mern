@@ -7,7 +7,9 @@ import {
   signInFailure,
 } from "../redux/user/userSlice.js";
 import OAuth from "../components/OAuth.jsx";
+
 const SignIn = () => {
+ 
   const [formaData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -27,7 +29,8 @@ const SignIn = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formaData),
+        body: JSON.stringify(formaData)
+       
       });
       const data = await res.json();
       if (data.success === false) {
