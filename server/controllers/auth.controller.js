@@ -110,7 +110,7 @@ try{
 
     
   }
-user.isVarified=true;
+user.isVerified=true;
 user.verificationToken=undefined;
 user.verificationTokenExpiresAt=undefined;
 await user.save();
@@ -166,6 +166,8 @@ export const signin = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // Must be true in production (HTTPS required)
+        sameSite: "strict", // Protects against CSRF
       })
       .status(200)
       .json(rest);
@@ -307,25 +309,24 @@ export const resetPassword = async (req, res,next) => {
 
 
 
-export const checkAuth=async(req,res,next)=>
-{
+export const checkAuth = async (req, res, next) => {
   try {
-    const user=await User.findById(req._id).select("-password");
-
-    if(!user)
-    {
-      
-
-      return next(errorHandler(400, "User not found"));
+    console.log("Checking auth for user:", req.user);
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      console.log("User not found");
+      return next(errorHandler(401, "User not authenticated"));
     }
 
-return next(errorHandler(200,"User found"));
-
+    console.log("User found:", user);
+    res.status(200).json({
+      success: true,
+      user
+    });
   } catch (error) {
-
-    console.log('Error in checkAuth',error);
-   
-    return next(errorHandler(400,"Error in checkAuth"))
-    
+    console.log("Error checking auth:", error);
+    return next(
+      errorHandler(500, "Server error while checking authentication")
+    );
   }
-}
+};

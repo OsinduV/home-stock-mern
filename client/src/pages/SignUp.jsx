@@ -38,7 +38,7 @@ const handleSubmit = async (e) => {
     setLoading(false);
     setError(null);
     setFormData({}); // Clear form data
-    navigate("/sign-in"); // Redirect to sign-in page
+    navigate("/verify-email"); // Redirect to sign-in page
   } catch (error) {
     setLoading(false);
     setError("Network error. Please check your connection and try again.");
