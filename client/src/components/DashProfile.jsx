@@ -8,8 +8,8 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from '../firebase';
-// import { CircularProgressbar } from 'react-circular-progressbar';
-// import 'react-circular-progressbar/dist/styles.css';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import {
   // updateStart,
   // updateSuccess,
@@ -34,64 +34,67 @@ export default function DashProfile() {
   const [updateUserError, setUpdateUserError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
-  // const filePickerRef = useRef();
+  const filePickerRef = useRef();
   // const dispatch = useDispatch();
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setImageFile(file);
-  //     setImageFileUrl(URL.createObjectURL(file));
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (imageFile) {
-  //     uploadImage();
-  //   }
-  // }, [imageFile]);
 
-  // const uploadImage = async () => {
-  //   // service firebase.storage {
-  //   //   match /b/{bucket}/o {
-  //   //     match /{allPaths=**} {
-  //   //       allow read;
-  //   //       allow write: if
-  //   //       request.resource.size < 2 * 1024 * 1024 &&
-  //   //       request.resource.contentType.matches('image/.*')
-  //   //     }
-  //   //   }
-  //   // }
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImageFileUrl(URL.createObjectURL(file));
+    }
+  };
+
+  useEffect(() => {
+    if (imageFile) {
+      uploadImage();
+    }
+  }, [imageFile]);
+
+  const uploadImage = async () => {
+    // service firebase.storage {
+    //   match /b/{bucket}/o {
+    //     match /{allPaths=**} {
+    //       // allow read, write: if false;
+    //       allow read;
+    //       allow write: if
+    //       request.resource.size < 2 * 1024 * 1024 &&
+    //       request.resource.contentType.matches('image/.*')
+    //     }
+    //   }
+    // }
   //   setImageFileUploading(true);
-  //   setImageFileUploadError(null);
-  //   const storage = getStorage(app);
-  //   const fileName = new Date().getTime() + imageFile.name;
-  //   const storageRef = ref(storage, fileName);
-  //   const uploadTask = uploadBytesResumable(storageRef, imageFile);
-  //   uploadTask.on(
-  //     'state_changed',
-  //     (snapshot) => {
-  //       const progress =
-  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    setImageFileUploadError(null);
+    const storage = getStorage(app);
+    const fileName = new Date().getTime() + imageFile.name;
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, imageFile); 
+    uploadTask.on(
+      'state_changed', //track changes when we are uploading
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-  //       setImageFileUploadProgress(progress.toFixed(0));
-  //     },
-  //     (error) => {
-  //       setImageFileUploadError(
-  //         'Could not upload image (File must be less than 2MB)'
-  //       );
-  //       setImageFileUploadProgress(null);
-  //       setImageFile(null);
-  //       setImageFileUrl(null);
-  //       setImageFileUploading(false);
-  //     },
-  //     () => {
-  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-  //         setImageFileUrl(downloadURL);
-  //         setFormData({ ...formData, profilePicture: downloadURL });
-  //         setImageFileUploading(false);
-  //       });
-  //     }
-  //   );
-  // };
+        setImageFileUploadProgress(progress.toFixed(0));
+      },
+      (error) => {
+        setImageFileUploadError(
+          'Could not upload image (File must be less than 2MB)'
+        );
+        setImageFileUploadProgress(null);
+        setImageFile(null);
+        setImageFileUrl(null);
+        setImageFileUploading(false);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImageFileUrl(downloadURL);
+          setFormData({ ...formData, profilePicture: downloadURL });
+          setImageFileUploading(false);
+        });
+      }
+    );
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -170,14 +173,14 @@ export default function DashProfile() {
       <form 
       // onSubmit={handleSubmit} 
       className='flex flex-col gap-4'>
-        {/* <input
+        <input
           type='file'
           accept='image/*'
           onChange={handleImageChange}
           ref={filePickerRef}
           hidden
-        /> */}
-        {/* <div
+        />
+        <div
           className='relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full'
           onClick={() => filePickerRef.current.click()}
         >
@@ -203,7 +206,7 @@ export default function DashProfile() {
             />
           )}
           <img
-            src={imageFileUrl || currentUser.profilePicture}
+            src={imageFileUrl || currentUser.avatar}
             alt='user'
             className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${
               imageFileUploadProgress &&
@@ -214,7 +217,7 @@ export default function DashProfile() {
         </div> 
         {imageFileUploadError && (
           <Alert color='failure'>{imageFileUploadError}</Alert>
-        )}  */}
+        )} 
         <TextInput
           type='text'
           id='username'
