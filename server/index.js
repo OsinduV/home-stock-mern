@@ -21,6 +21,8 @@ app.use(cookieParser()); //alow pass incoming cookies
 
 app.use("/api/auth",authRouter);
 app.use("/api/user",userRoutes);
+
+//Routes MIddleware
 app.use("/api/v1/products",productRouter);
 
 mongoose
