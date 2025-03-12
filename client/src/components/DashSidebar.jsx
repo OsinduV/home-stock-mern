@@ -62,6 +62,19 @@ export default function DashSidebar() {
           <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer" onClick={handleSignout}>
             Sign Out
           </Sidebar.Item>
+
+          <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer" onClick={handleSignout}>
+            Inventory
+          </Sidebar.Item>
+
+          <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer" onClick={handleSignout}>
+            Reports
+          </Sidebar.Item>
+
+          <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer" onClick={handleSignout}>
+            Notifications
+          </Sidebar.Item>
+
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
