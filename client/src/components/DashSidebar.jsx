@@ -63,9 +63,16 @@ export default function DashSidebar() {
             Sign Out
           </Sidebar.Item>
 
-          <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer" onClick={handleSignout}>
-            Inventory
+          <Link to ="/dashboard?tab=inventory">
+          <Sidebar.Item
+           active={tab ==="inventory"}
+           icon={HiDocumentText}
+           as="div"
+          >Inventory
+
           </Sidebar.Item>
+
+          </Link>
 
           <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer" onClick={handleSignout}>
             Reports
