@@ -66,7 +66,12 @@ const SignIn = () => {
           onChange={handleChange}
           disabled={loading}
         />
-
+        <div className="flex gap-2 mt-0">
+          
+          <Link to="/forgot-password">
+            <span className="text-blue-700">Forgot Password?</span>
+          </Link>
+        </div>
         <button
           className="p-3 text-white uppercase rounded-lg bg-slate-700 hover:opacity-95"
           disabled={loading}
@@ -82,6 +87,7 @@ const SignIn = () => {
           <span className="text-blue-700">Sign Up</span>
         </Link>
       </div>
+
       {error && <p className="text-red-500">{error}</p>}
     </div>
   );

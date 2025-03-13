@@ -201,6 +201,7 @@ export const google = async (req, res, next) => {
         email: req.body.email,
         password: hashedPassword,
         avatar: req.body.photo,
+        isVerified: true,
       });
 
       await newUser.save();
