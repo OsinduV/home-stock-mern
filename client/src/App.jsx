@@ -13,7 +13,6 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import EmailVerificationPage from "./pages/EmailVerificationPage.jsx";
 import { Toaster } from "react-hot-toast";
 
-
 export default function App() {
   
 
@@ -48,7 +47,7 @@ return (
         />
         <Route path="/about" element={<About />} />
         <Route path="/verify-email" element={<EmailVerificationPage />} />
-
+       
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>

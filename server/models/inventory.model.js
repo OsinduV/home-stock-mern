@@ -11,10 +11,10 @@ const inventorySchema = new mongoose.Schema(
       type: String,
       required: [true, "Category is required"],
       trim: true,
-      unique:true
+    
     },
     quantity: {
-      type: Number,
+      type: String,
       required: [true, "Quantity is required"],
       min: [0, "Quantity cannot be negative"],
     },

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addInventoryItem, getallInventry, getinventoryById } from "../controllers/inventory.controller.js";
+import { addInventoryItem, deleteInventory, getallInventry, getInventoryById, updateInventory } from "../controllers/inventory.controller.js";
 
 const productRouter = Router();
 
@@ -26,8 +26,10 @@ const productRouter = Router();
 // });
 
 productRouter.post("/add",addInventoryItem);
-productRouter.get("/all-inventry",getallInventry);
-productRouter.get("/all-inventry/by-id",getinventoryById)
+productRouter.get("/all-inventory",getallInventry);
+productRouter.get("/all-inventory/by-id",getInventoryById);
+productRouter.put('/update-inventory',updateInventory);
+productRouter.delete('/delete-inventory',deleteInventory);
 
 
 export default productRouter;

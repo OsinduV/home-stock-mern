@@ -7,6 +7,8 @@ import {
   HiAnnotation,
   HiChartPie,
 } from "react-icons/hi";
+import { TbReportSearch } from "react-icons/tb";
+import { IoMdNotifications } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -58,10 +60,8 @@ export default function DashSidebar() {
               Profile
             </Sidebar.Item>
           </Link>
-
-          <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer" onClick={handleSignout}>
-            Sign Out
-          </Sidebar.Item>
+          
+          
 
           <Link to ="/dashboard?tab=inventory">
           <Sidebar.Item
@@ -73,14 +73,26 @@ export default function DashSidebar() {
           </Sidebar.Item>
 
           </Link>
-
-          <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer" onClick={handleSignout}>
+          <Link to = "/dashboard?tab=reports">
+          <Sidebar.Item 
+          active = {tab === "reports"}
+          icon={TbReportSearch} 
+          className="cursor-pointer"
+          as="div"
+           >
             Reports
           </Sidebar.Item>
-
-          <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer" onClick={handleSignout}>
+          </Link>
+          
+          <Link to="/dashboard?tab=notifications">
+          <Sidebar.Item 
+          active = {tab ==="notifications"}
+          icon={IoMdNotifications} 
+          className="cursor-pointer" 
+          as = "div">
             Notifications
           </Sidebar.Item>
+          </Link>
 
         </Sidebar.ItemGroup>
       </Sidebar.Items>

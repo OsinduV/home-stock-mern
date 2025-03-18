@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.route.js"
 import userRoutes from "./routes/user.route.js"
 import cors from "cors"
 import productRouter from "./routes/products.route.js";
+import reportRouter from "./routes/reports.route.js";
 
 
 dotenv.config();
@@ -24,6 +25,17 @@ app.use("/api/user",userRoutes);
 
 //Routes MIddleware
 app.use("/api/v1/products",productRouter);
+app.use("/api/reports",reportRouter)
+
+app.use((err,req,res,next) =>{
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "internel server error";
+  res.status(statusCode).json({
+    sucess:false,
+    statusCode,
+    message,
+  })
+})
 
 mongoose
   .connect(process.env.MONGO)
@@ -35,18 +47,6 @@ mongoose
   });
 
 
-app.listen(5000, () => {
-  console.log("Server is running one 5000!");
-});
-
-app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-
-  const message = err.message || "Internal server error";
-
-  return res.status(statusCode).json({
-    success: false,
-    statusCode,
-    message,
-  });
-});
+app.listen(5000,()=>{
+  console.log("server is running on port 5000!");
+})
