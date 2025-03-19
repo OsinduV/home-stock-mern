@@ -98,7 +98,7 @@ export const deleteInventory = (req,res,next)=>{
     .catch(error=>{
         res.json({error})
     })
-}
+};
 
 export const updateInventory = (req,res)=>{
     const {id,name,category,quantity,price,supplier,description,createdAt,updatedAt} = req.body;

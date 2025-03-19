@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function DashNotifications() {
   return (
-    <div>Hello Ashoka!!</div>
+    <div>This is notification page!</div>
   )
 }

@@ -7,6 +7,7 @@ import userRoutes from "./routes/user.route.js"
 import cors from "cors"
 import productRouter from "./routes/products.route.js";
 import reportRouter from "./routes/reports.route.js";
+import categoryRouter from "./routes/category.route.js";
 
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.use("/api/user",userRoutes);
 //Routes MIddleware
 app.use("/api/v1/products",productRouter);
 app.use("/api/reports",reportRouter)
+app.use("/api/v1/category",categoryRouter)
 
 app.use((err,req,res,next) =>{
   const statusCode = err.statusCode || 500;

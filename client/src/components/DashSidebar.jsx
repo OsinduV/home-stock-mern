@@ -8,6 +8,7 @@ import {
   HiChartPie,
 } from "react-icons/hi";
 import { TbReportSearch } from "react-icons/tb";
+import { BiSolidCategory } from "react-icons/bi";
 import { IoMdNotifications } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -73,6 +74,17 @@ export default function DashSidebar() {
           </Sidebar.Item>
 
           </Link>
+
+          <Link to="/dashboard?tab=category">
+          <Sidebar.Item 
+          active = {tab ==="category"}
+          icon={BiSolidCategory} 
+          className="cursor-pointer" 
+          as = "div">
+            Category
+          </Sidebar.Item>
+          </Link>
+
           <Link to = "/dashboard?tab=reports">
           <Sidebar.Item 
           active = {tab === "reports"}
