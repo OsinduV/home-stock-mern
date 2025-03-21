@@ -86,32 +86,48 @@ export const getInventoryById = (req, res) => {
     }
 };
 
+export const updateInventory = async (req, res) => {
+    const { id } = req.params; // Get ID from URL params
+    const { name, category, quantity, price, supplier, description, createdAt, updatedAt } = req.body; // Get new data from request body
 
-export const deleteInventory = (req,res,next)=>{
-    const id = req.body.id;
-    Inventory.deleteOne({id:id})
-    .then(response=>{
-        res.json({
-            msg:"Inventory is deleted!",
-        })
-    })
-    .catch(error=>{
-        res.json({error})
-    })
+    try {
+        const updatedInventory = await Inventory.findByIdAndUpdate(
+            id, 
+            { name:name}, 
+            {category:category}, 
+            {quantity:quantity}, 
+            {price:price},
+            {supplier:supplier},
+            {description:description},
+            {createdAt:createdAt},
+            {updatedAt:updatedAt}, // Update only the provided fields
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedInventory) {
+            return res.status(404).json({ msg: "Inventory item not found!" });
+        }
+
+        res.json({ msg: "Inventory updated successfully!", updatedInventory });
+    } catch (error) {
+        res.status(500).json({ msg: "Server error", error: error.message });
+    }
 };
 
-export const updateInventory = (req,res)=>{
-    const {id,name,category,quantity,price,supplier,description,createdAt,updatedAt} = req.body;
-    Inventory.updateOne({id:id},{$set:{name:name,category:category,quantity:quantity,price:price,supplier:supplier,description:description,
-                                         createdAt:createdAt,updatedAt:updatedAt
-    }})
-    .then(response=>{
-        res.json({
-            msg:"Inventory is updated!!",
-        })
-    })
-    .catch(error=>{
-        res.json({error})
-    })
-    
+
+
+export const deleteInventory = async(req,res)=>{
+    const {id} = req.params;
+   try{
+    const deletedInventory = await Inventory.findByIdAndDelete(id);
+
+    if (!deletedInventory) {
+        return res.status(404).json({ msg: "Inventory not found!" });
+    }
+    res.json({ msg: "Inventory deleted successfully!" });
+   }
+   catch (error) {
+    res.status(500).json({ msg: "Server error", error: error.message });
 }
+};
+

@@ -37,12 +37,36 @@ const DashReports = () => {
     };
   
     return (
-      <div>
-        <h2>Download Inventory Reports</h2>
-        <button onClick={downloadPDF}>Download PDF Report</button>
-        <button onClick={downloadExcel}>Download Excel Report</button>
-      </div>
-    );
+      <div className="min-h-screen flex bg-gray-100">
+    {/* Sidebar (Assuming you have one) */}
+    <aside className="w-64 bg-gray-900 text-white p-4">
+        {/* Sidebar content here */}
+    </aside>
+
+    {/* Main Content */}
+    <div className="flex-grow bg-white p-6 rounded-2xl shadow-lg">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Inventory Report</h2>
+
+        {/* Report Content */}
+        <div className="border rounded-lg p-4 bg-gray-50 text-gray-700">
+            <p className="mb-2"><strong>Total Items:</strong> 1</p>
+            <p className="mb-2"><strong>Out of Stock:</strong> 5</p>
+            <p className="mb-2"><strong>Last Updated:</strong> March 20, 2025</p>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex gap-4 mt-6">
+            <button onClick={downloadPDF} className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md transition">
+                Download PDF Report
+            </button>
+            <button onClick={downloadExcel} className="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg shadow-md transition">
+                Download Excel Report
+            </button>
+        </div>
+    </div>
+</div>
+
+);
   };
   
   export default DashReports;

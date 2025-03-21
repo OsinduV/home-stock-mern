@@ -28,8 +28,8 @@ const productRouter = Router();
 productRouter.post("/add",addInventoryItem);
 productRouter.get("/all-inventory",getallInventry);
 productRouter.get("/all-inventory/by-id",getInventoryById);
-productRouter.put('/update-inventory',updateInventory);
-productRouter.delete('/delete-inventory',deleteInventory);
+productRouter.put('/update-inventory/:id',updateInventory);
+productRouter.delete('/delete-inventory/:id',deleteInventory);
 
 
 export default productRouter;

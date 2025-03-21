@@ -12,6 +12,7 @@ import Footer from "./components/Footer.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import EmailVerificationPage from "./pages/EmailVerificationPage.jsx";
 import { Toaster } from "react-hot-toast";
+import DashAddInventory from "./components/DashAddInventory.jsx";
 
 export default function App() {
   
@@ -21,7 +22,7 @@ return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route
+         <Route
           path="/"
           element={
           
@@ -49,8 +50,9 @@ return (
         <Route path="/verify-email" element={<EmailVerificationPage />} />
        
         <Route element={<PrivateRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Route>
+          <Route path="/dashboard" element={<Dashboard />} /> 
+        </Route> 
+        <Route path = "/add-inventory"element={<DashAddInventory/>}/>
       </Routes>
 
       <Toaster />
