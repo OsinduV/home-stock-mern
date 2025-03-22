@@ -23,7 +23,13 @@ export default function CallToAction() {
             </Button>
         </div>
         <div className="p-7 flex-1">
-            <img src="https://img.freepik.com/free-photo/young-woman-using-home-technology_23-2149216654.jpg?t=st=1741689399~exp=1741692999~hmac=b9a16afa3fff30f25da13ac45ceeea075f4ba78fca4024f9de9fd85ace74855a&w=1380" />
+        <img 
+           src="https://images.unsplash.com/photo-1581515286348-98549702050f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+            alt="Organized home storage"
+            className="w-full h-auto rounded-lg shadow-md"
+        />
+
+
         </div>
     </div>
   )

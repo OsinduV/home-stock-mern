@@ -201,6 +201,7 @@ export const google = async (req, res, next) => {
         email: req.body.email,
         password: hashedPassword,
         avatar: req.body.photo,
+        isVerified: true,
       });
 
       await newUser.save();
@@ -323,6 +324,7 @@ export const checkAuth = async (req, res, next) => {
       success: true,
       user
     });
+    
   } catch (error) {
     console.log("Error checking auth:", error);
     return next(

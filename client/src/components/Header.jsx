@@ -6,6 +6,7 @@ import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import { signOutUserSuccess } from "../redux/user/userSlice";
+import { FaShoppingBasket } from "react-icons/fa";
 
 export default function Header() {
   const path = useLocation().pathname;
