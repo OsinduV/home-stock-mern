@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home.jsx";
@@ -11,6 +10,8 @@ import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import EmailVerificationPage from "./pages/EmailVerificationPage.jsx";
+import ShoppingList from "./pages/ShoppingList.jsx"; // Import the ShoppingList component
+import { ShoppingListProvider } from "./context/ShoppingListContext"; // yumeth-shopping-list
 import { Toaster } from "react-hot-toast";
 
 import { useSelector } from "react-redux";
@@ -47,6 +48,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
  
 return (
   <BrowserRouter>
+  <ShoppingListProvider>
     <Header />
     <Routes>
       <Route
@@ -110,6 +112,8 @@ element={
     <Toaster />
 
     <Footer />
+  </ShoppingListProvider>
   </BrowserRouter>
 );
+
 }

@@ -12,6 +12,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import {signOutUserSuccess} from "../redux/user/userSlice"
+import { FaShoppingBasket } from "react-icons/fa";
 
 export default function DashSidebar() {
   const location = useLocation();
@@ -56,6 +57,16 @@ export default function DashSidebar() {
               as="div"
             >
               Profile
+            </Sidebar.Item>
+          </Link>
+
+          <Link to="/dashboard?tab=shopping-list">
+            <Sidebar.Item
+              active={tab === "shopping-list"}
+              icon={FaShoppingBasket}
+              as="div"
+            >
+              Shopping-List
             </Sidebar.Item>
           </Link>
 
