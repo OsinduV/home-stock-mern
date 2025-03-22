@@ -324,6 +324,7 @@ export const checkAuth = async (req, res, next) => {
       success: true,
       user
     });
+    
   } catch (error) {
     console.log("Error checking auth:", error);
     return next(
