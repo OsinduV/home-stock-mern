@@ -36,6 +36,8 @@ export default function DashProfile() {
   const filePickerRef = useRef();
   const dispatch = useDispatch();
 
+  console.log(formData);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {

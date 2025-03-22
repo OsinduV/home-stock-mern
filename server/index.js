@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.route.js"
 import userRoutes from "./routes/user.route.js"
+import ocrRoutes from "./routes/ocr.route.js"
 import cors from "cors"
 
 
@@ -20,11 +21,12 @@ app.use(cookieParser()); //alow pass incoming cookies
 
 app.use("/api/auth",authRouter);
 app.use("/api/user",userRoutes);
+app.use("/api/ocr",ocrRoutes);
 
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
-    console.log("MongoDB is connected");
+    console.log("MongoDB is connected!!!");
   })
   .catch((err) => {
     console.log(err);
@@ -32,7 +34,7 @@ mongoose
 
 
 app.listen(5000, () => {
-  console.log("Server is running one 5000!");
+  console.log("Server is running on 5000!!!!");
 });
 
 app.use((err, req, res, next) => {

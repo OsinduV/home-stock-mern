@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home.jsx";
@@ -12,45 +11,22 @@ import Footer from "./components/Footer.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import EmailVerificationPage from "./pages/EmailVerificationPage.jsx";
 import { Toaster } from "react-hot-toast";
-
+import ReceiptScanning from "./pages/ReceiptScanning.jsx";
 
 export default function App() {
-  
-
- 
-return (
+  return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route
-          path="/"
-          element={
-          
-              <Home />
-          
-          }
-        />
-        <Route
-          path="/sign-in"
-          element={
-           
-              <SignIn />
-          
-          }
-        />
-        <Route
-          path="/sign-up"
-          element={
-          
-              <SignUp />
-            
-          }
-        />
+        <Route path="/" element={<Home />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
         <Route path="/about" element={<About />} />
         <Route path="/verify-email" element={<EmailVerificationPage />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/receipt-scanning" element={<ReceiptScanning />} />
         </Route>
       </Routes>
 
