@@ -16,8 +16,16 @@ export const verifyToken = (req, res, next) => {
       return next(errorHandler(401, "Unauthorized: Invalid token"));
     }
 
+    // Log the decoded token for debugging
+    console.log("Decoded token:", decoded);
+
     // Attach the decoded user ID to the request object
-    req.user = { _id: decoded.userId }; // Use req.user instead of req.userId
+    // Handle both possible formats: { id: ... } and { userId: ... }
+    req.user = { 
+      _id: decoded.userId || decoded.id 
+    };
+    
+    console.log("User ID set in request:", req.user._id);
     next();
   } catch (error) {
     console.error("Error in verifyToken:", error);
