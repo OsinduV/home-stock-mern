@@ -4,7 +4,11 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.route.js"
 import userRoutes from "./routes/user.route.js"
+
+import ocrRoutes from "./routes/ocr.route.js"
+
 import shoppingListRoutes from "./routes/shoppingList.route.js";
+
 import cors from "cors"
 
 dotenv.config();
@@ -19,21 +23,23 @@ app.use(express.json()); // allows to parse incoming requests:req:body
 
 app.use(cookieParser()); // allow pass incoming cookies
 
-app.use("/api/auth", authRouter);
-app.use("/api/user", userRoutes);
+
+app.use("/api/auth",authRouter);
+app.use("/api/user",userRoutes);
+app.use("/api/ocr",ocrRoutes);
 app.use("/api/shopping-list", shoppingListRoutes);
 
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
-    console.log("MongoDB is connected");
+    console.log("MongoDB is connected!!!");
   })
   .catch((err) => {
     console.log(err);
   });
 
 app.listen(5000, () => {
-  console.log("Server is running one 5000!");
+  console.log("Server is running on 5000!!!!");
 });
 
 app.use((err, req, res, next) => {

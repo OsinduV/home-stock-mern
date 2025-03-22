@@ -14,18 +14,17 @@ import ShoppingList from "./pages/ShoppingList.jsx"; // Import the ShoppingList 
 import { ShoppingListProvider } from "./context/ShoppingListContext"; // yumeth-shopping-list
 import { Toaster } from "react-hot-toast";
 
-import { useSelector } from "react-redux";
-
+import ReceiptScanning from "./pages/ReceiptScanning.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
 import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 
+import { useSelector } from "react-redux";
 
 export default function App() {
   
-const { currentUser, loading, error } = useSelector((state) => state.user);
-console.log(currentUser);
-//Protect routes that require authentication
-const ProtectedRoute = ({ children }) => {
+  const { currentUser, loading, error } = useSelector((state) => state.user);
+  
+  const ProtectedRoute = ({ children }) => {
   if (!currentUser) {
     return <Navigate to="/sign-in" replace />;
   }
@@ -45,23 +44,24 @@ const RedirectAuthenticatedUser = ({ children }) => {
 
   return children;
 };
- 
-return (
-  <BrowserRouter>
-  <ShoppingListProvider>
-    <Header />
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route
+  
+  return (
+    <BrowserRouter>
+      <ShoppingListProvider>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        
+        <Route
         path="/sign-in"
         element={
           <RedirectAuthenticatedUser>
             <SignIn />
           </RedirectAuthenticatedUser>
         }
-      />
-
-      <Route
+        />
+        
+         <Route
         path="/sign-up"
         element={
           <RedirectAuthenticatedUser>
@@ -69,9 +69,8 @@ return (
           </RedirectAuthenticatedUser>
         }
       />
-      <Route path="/about" element={<About />} />
-      <Route path="/verify-email" element={<EmailVerificationPage />} />
-      <Route
+          
+          <Route
         path="/forgot-password"
         element={
           <RedirectAuthenticatedUser>
@@ -79,19 +78,18 @@ return (
           </RedirectAuthenticatedUser>
         }
       />
+          
+          
+          
+        <Route path="/about" element={<About />} />
+        <Route path="/verify-email" element={<EmailVerificationPage />} />
 
-      <Route element={<PrivateRoute />}>
+        <Route element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/receipt-scanning" element={<ReceiptScanning />} />
+        </Route>
+
         <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-      </Route>
-
-      <Route
         path="/reset-password/:token"
         element={
           <RedirectAuthenticatedUser>
@@ -99,7 +97,8 @@ return (
           </RedirectAuthenticatedUser>
         }
       />
-    </Routes>
+        
+      </Routes>
 
     <Toaster />
 

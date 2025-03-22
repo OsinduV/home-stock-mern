@@ -41,6 +41,8 @@ export default function DashProfile() {
 
   const filePickerRef = useRef();
 
+
+
   // Initialize formData with current user data
   useEffect(() => {
     if (currentUser) {
@@ -50,6 +52,7 @@ export default function DashProfile() {
         avatar: currentUser.avatar,
       });
       setImageFileUrl(currentUser.avatar);
+
     }
   }, [currentUser]);
 

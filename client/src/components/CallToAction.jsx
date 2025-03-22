@@ -1,4 +1,5 @@
 import { Button } from 'flowbite-react';
+import { Link } from 'react-router';
 
 export default function CallToAction() {
   return (
@@ -10,11 +11,11 @@ export default function CallToAction() {
             <p className='text-gray-500 my-2'>
                 Checkout Our Features
             </p>
-            <Button gradientDuoTone='purpleToBlue' className='rounded-tl-xl rounded-bl-none'>
-                <a href="#" target='_blank' rel='noopener noreferrer'>
+            <Link to='/receipt-scanning'>
+            <Button gradientDuoTone='purpleToBlue' className='w-full rounded-tl-xl rounded-bl-none'>
                     Scan Grocery List
-                </a>
             </Button>
+            </Link>
             <Button gradientDuoTone='purpleToPink' className='rounded-tl-xl rounded-bl-none my-2'>
                 <a href="#" target='_blank' rel='noopener noreferrer'>
                     Manually Add Inventories
