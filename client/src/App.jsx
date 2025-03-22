@@ -24,7 +24,7 @@ export default function App() {
   
 const { currentUser, loading, error } = useSelector((state) => state.user);
 console.log(currentUser);
-// Protect routes that require authentication
+//Protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
   if (!currentUser) {
     return <Navigate to="/sign-in" replace />;
@@ -37,7 +37,7 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-// Redirect authenticated users to the home page
+//Redirect authenticated users to the home page
 const RedirectAuthenticatedUser = ({ children }) => {
   if (currentUser && currentUser.isVerified) {
     return <Navigate to="/" replace />;
@@ -51,14 +51,7 @@ return (
   <ShoppingListProvider>
     <Header />
     <Routes>
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/" element={<Home />} />
       <Route
         path="/sign-in"
         element={
@@ -88,25 +81,24 @@ return (
       />
 
       <Route element={<PrivateRoute />}>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Route>
 
-
-<Route
-path='/reset-password/:token'
-element={
-
-  <RedirectAuthenticatedUser>
-
-<ResetPasswordPage/>
-
-  </RedirectAuthenticatedUser>
-}
-
-
-/>
-
-
+      <Route
+        path="/reset-password/:token"
+        element={
+          <RedirectAuthenticatedUser>
+            <ResetPasswordPage />
+          </RedirectAuthenticatedUser>
+        }
+      />
     </Routes>
 
     <Toaster />

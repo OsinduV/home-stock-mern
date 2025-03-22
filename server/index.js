@@ -11,12 +11,9 @@ dotenv.config();
 const app = express();
 
 app.use(cors());
-// Update CORS configuration to allow credentials
-// This is crucial for authentication to work properly across domains
-// app.use(cors({
-//   origin: "http://localhost:5173", // Your frontend URL
-//   credentials: true // Allow cookies to be sent with requests
-// }));
+
+// app.use(cors({origin:"http://localhost:5173",credentials:true}));
+
 
 app.use(express.json()); // allows to parse incoming requests:req:body
 
