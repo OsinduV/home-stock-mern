@@ -2,16 +2,14 @@ import { create } from "zustand";
 import axios from "axios";
 import { errorHandler } from "../../../server/utils/error";
 
-
-const API_URL ="http://localhost:5000/api/auth"
-
+const API_URL = "http://localhost:5000/api/auth";
 
 export const useAuthStore = create((set) => ({
   isLoading: false,
   error: null,
   user: null,
   isAuthenticated: false,
-  message:null,
+  message: null,
 
   verifyEmail: async (code) => {
     set({ isLoading: true, error: null });
@@ -37,9 +35,7 @@ export const useAuthStore = create((set) => ({
     set({ isCheckingAuth: true, error: null });
 
     try {
-      const response = await axios.get(`${API_URL}/check-auth`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(`${API_URL}/check-auth`);
 
       if (response.data.user) {
         set({
@@ -60,34 +56,35 @@ export const useAuthStore = create((set) => ({
       });
     }
   },
-  forgotPassword:async(email)=>{
-
-set({ isLoading: true, error: null });
-		try {
-			const response = await axios.post(`${API_URL}/forgot-password`, { email });
-			set({ message: response.data.message, isLoading: false });
-		} catch (error) {
-			set({
-				isLoading: false,
-				error: error.response.data.message || "Error sending reset password email",
-			});
-			throw error;
+  forgotPassword: async (email) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.post(`${API_URL}/forgot-password`, 
+       { email},
+      {withCredentials:true});
+      set({ message: response.data.message, isLoading: false });
+    } catch (error) {
+      set({
+        isLoading: false,
+        error:
+          error.response.data.message || "Error sending reset password email",
+      });
+      throw error;
     }
   },
-  resetPassword:async(token,password)=>
-  {
-set({isLoading:true,error:null});
-try {
-  const response = await axios.post(`${API_URL}/reset-password/${token}`, {
-    password,
-  });
-  set({ message: response.data.message, isLoading: false });
-} catch (error) {
-  set({
-    isLoading: false,
-    error: error.response.data.message || "Error resetting password",
-  });
-  throw error;
-}
-  }
+  resetPassword: async (token, password) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.post(`${API_URL}/reset-password/${token}`, {
+        password,
+      });
+      set({ message: response.data.message, isLoading: false });
+    } catch (error) {
+      set({
+        isLoading: false,
+        error: error.response.data.message || "Error resetting password",
+      });
+      throw error;
+    }
+  },
 }));
