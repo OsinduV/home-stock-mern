@@ -11,12 +11,25 @@ import shoppingListRoutes from "./routes/shoppingList.route.js";
 
 import cors from "cors"
 
-dotenv.config();
+
 const app = express();
 
-app.use(cors());
+dotenv.config();
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL, // Your frontend URL
+    credentials: true, // Allow cookies and authentication headers
+  })
+);
+
+
+
+
+
+
 
 // app.use(cors({origin:"http://localhost:5173",credentials:true}));
+
 
 
 app.use(express.json()); // allows to parse incoming requests:req:body

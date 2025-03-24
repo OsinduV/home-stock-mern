@@ -1,24 +1,20 @@
-import {errorHandler} from '../utils/error.js';
+import { errorHandler } from "../utils/error.js";
 
-import User from "../models/user.model.js"
+import User from "../models/user.model.js";
 
-import bcryptjs from 'bcryptjs'
-import { deleteMediaFromCloudinary, uploadMedia } from '../utils/cloudinary.js';
-
-
+import bcryptjs from "bcryptjs";
+import { deleteMediaFromCloudinary, uploadMedia } from "../utils/cloudinary.js";
 
 export const signout = (req, res, next) => {
-    try {
-      res
-        .clearCookie('access_token')
-        .status(200)
-        .json('User has been signed out');
-    } catch (error) {
-      next(error);
-    }
-  };
-
-
+  try {
+    res
+      .clearCookie("access_token")
+      .status(200)
+      .json("User has been signed out");
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const getUser = async (req, res, next) => {
   try {
@@ -33,12 +29,9 @@ export const getUser = async (req, res, next) => {
   }
 };
 
-
-
-
 export const updateUser = async (req, res, next) => {
   // Check if the user is updating their own account
-  if (req.user.id !== req.params.id) {
+  if (req.user._id !== req.params.id) {
     return next(errorHandler(401, "You can only update your own account!"));
   }
 
@@ -52,7 +45,7 @@ export const updateUser = async (req, res, next) => {
 
     // Fetch the current user document
     const currentUser = await User.findById(req.params.id);
-    
+
     if (!currentUser) {
       return next(errorHandler(404, "User not found"));
     }
@@ -120,7 +113,7 @@ export const updateUser = async (req, res, next) => {
 };
 
 export const deleteUser = async (req, res, next) => {
-  if (req.user.id !== req.params.id)
+  if (req.user._id !== req.params.id)
     return next(errorHandler(401, "You can only delete your own account"));
 
   try {
