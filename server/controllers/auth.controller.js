@@ -16,7 +16,7 @@ import {
 
 export const signup = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password,isAdmin } = req.body;
 
     // Validate input fields
     if (!email || !username || !password) {
@@ -114,7 +114,7 @@ export const signin = async (req, res, next) => {
     if (!validPassword) return next(errorHandler(401, "Wrong credentials!"));
 
     // Generate JWT token
-    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: validUser._id,isAdmin: validUser.isAdmin}, process.env.JWT_SECRET, {
       expiresIn: "1h", // Optional: Add expiration time for security
     });
 
@@ -139,7 +139,7 @@ export const google = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: user._id,isAdmin:user.isAdmin }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = user._doc;
       res
         .cookie("access_token", token, { httpOnly: true })
@@ -163,7 +163,7 @@ export const google = async (req, res, next) => {
       });
 
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: newUser._id,isAdmin:newUser.isAdmin }, process.env.JWT_SECRET);
 
       const { password: pass, ...rest } = newUser._doc;
       res

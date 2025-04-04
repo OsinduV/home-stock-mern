@@ -3,8 +3,11 @@ import { useLocation } from "react-router-dom";
 import DashSidebar from '../components/DashSidebar';
 import DashProfile from '../components/DashProfile';
 import ShoppingList from '../pages/ShoppingList';
-
+import DashUsers from "../components/DashUsers";
+import DashboardComp from "../components/DashboardComp";
+import { useSelector } from "react-redux";
 export default function Dashboard() {
+    const { currentUser } = useSelector((state) => state.user);
   const location = useLocation();
   const [tab, setTab] = useState("");
 
@@ -18,15 +21,25 @@ export default function Dashboard() {
 
 
 return (
-    <div className='min-h-screen flex flex-col md:flex-row'>
-      <div className='md:w-56'>
-        {/* Sidebar */}
-        <DashSidebar />
-      </div>
-      {/* profile... */}
-      {tab === 'profile' && <DashProfile />}
-      {tab === 'shopping-list' && <ShoppingList />}
-
+  <div className="flex flex-col min-h-screen md:flex-row">
+    <div className="md:w-56">
+      {/* Sidebar */}
+      <DashSidebar />
     </div>
-  );
+    {/* profile... */}
+
+    
+    {tab === "profile" && <DashProfile />}
+    {tab === "shopping-list" && <ShoppingList />}
+
+    {/* users */}
+
+    {tab === "users" && <DashUsers />}
+
+    {/* users */}
+
+    {tab === "dash" && <DashboardComp />}
+    
+  </div>
+);
 }
