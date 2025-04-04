@@ -27,8 +27,9 @@ if(!token)return next(errorHandler(401,'Unauthorized'));
 
     // Attach the decoded user ID to the request object
     // Handle both possible formats: { id: ... } and { userId: ... }
-    req.user = { 
-      _id: decoded.id 
+    req.user = {
+      _id: decoded.id,
+      isAdmin:decoded.isAdmin
     };
     
     console.log("User ID set in request:", req.user._id);
