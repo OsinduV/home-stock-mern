@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+//import HoverEffectButton from './HoverEffectButton';
 
 export default function DashInventory() {
   const [inventory, setInventory] = useState([]);
@@ -41,7 +42,7 @@ export default function DashInventory() {
   };
 
   const handleEditInventory = (id) => {
-    navigate(`/update-inventory/${id}`);  // Redirect to Edit Inventory page with the item's ID
+    navigate(`/update-inventory/${id}`);   // Redirect to Edit Inventory page with the item's ID
   };
 
   const handleDeleteInventory = (id) => {
@@ -60,21 +61,19 @@ export default function DashInventory() {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <div>
+       <div>
         <h2 className="text-3xl font-bold text-gray-800">Inventory List</h2>
-        <button
-          onClick={handleAddInventory}
-          className="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-200"
-        >
-          + Add Inventory
-        </button>
-      </div>
+        {/* <HoverEffectButton onClick={handleAddInventory}>
+           + Add Inventory
+           </HoverEffectButton> */}
+      </div> 
+      <br/><br/>
 
       <div className="overflow-x-auto mt-6">
         <table className="min-w-full table-auto bg-white shadow-md rounded-lg">
           <thead>
             <tr className="bg-gray-200 text-gray-700">
-              <th className="px-4 py-2 border-b">ID</th>
+              {/* <th className="px-4 py-2 border-b">ID</th> */}
               <th className="px-4 py-2 border-b">Name</th>
               <th className="px-4 py-2 border-b">Category</th>
               <th className="px-4 py-2 border-b">Quantity</th>
@@ -89,7 +88,7 @@ export default function DashInventory() {
           <tbody>
             {inventory.map(item => (
               <tr key={item._id} className="border-b hover:bg-gray-100">
-                <td className="px-4 py-2">{item._id}</td> 
+                {/* <td className="px-4 py-2">{item._id}</td>  */}
                 <td className="px-4 py-2">{item.name}</td>
                 <td className="px-4 py-2">{item.category}</td>
                 <td className="px-4 py-2">{item.quantity}</td>

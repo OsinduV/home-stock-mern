@@ -27,7 +27,7 @@ const productRouter = Router();
 
 productRouter.post("/add",addInventoryItem);
 productRouter.get("/all-inventory",getallInventry);
-productRouter.get("/all-inventory/by-id",getInventoryById);
+productRouter.get("/all-inventory/by-id/:id",getInventoryById);
 productRouter.put('/update-inventory/:id',updateInventory);
 productRouter.delete('/delete-inventory/:id',deleteInventory);
 

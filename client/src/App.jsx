@@ -13,6 +13,8 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import EmailVerificationPage from "./pages/EmailVerificationPage.jsx";
 import { Toaster } from "react-hot-toast";
 import DashAddInventory from "./components/DashAddInventory.jsx";
+import DashInventory from "./components/DashInventory.jsx";
+import DashUpdateInventory from "./components/DashUpdateInventory.jsx";
 
 export default function App() {
   
@@ -53,6 +55,8 @@ return (
           <Route path="/dashboard" element={<Dashboard />} /> 
         </Route> 
         <Route path = "/add-inventory"element={<DashAddInventory/>}/>
+        <Route path = "/inventory-list" element={<DashInventory/>}/>
+        <Route path="/update-inventory/:id" element={<DashUpdateInventory/>}/>
       </Routes>
 
       <Toaster />

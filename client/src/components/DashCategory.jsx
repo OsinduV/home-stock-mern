@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import HoverEffectButton from './HoverEffectButton';
 
 export default function DashCategory() {
   const [category, setCategory] = useState([]);
@@ -45,16 +46,13 @@ export default function DashCategory() {
   return (
     <div className="w-full max-w-screen-xl mx-auto p-6 min-h-screen bg-gray-300 bg-cover bg-center" 
     style={{ backgroundImage: "url('/images/i1_background.jpg')", backgroundOpacity: 0.5 }}>
-
+            
 
       <div>
         <h2 className="text-3xl font-bold text-green-800">Category List</h2>
-        <button
-          onClick={handleAddCategory}
-          className="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-200"
-        >
-          + Add Category
-        </button>
+        <HoverEffectButton onClick={handleAddCategory}>
+  + Add Category
+           </HoverEffectButton>
       </div>
 
       <div className="flex items-center justify-center min-h-screen">

@@ -6,6 +6,7 @@ import DashInventory from "../components/DashInventory";
 import DashReports from "../components/DashReports";
 import DashNotifications from "../components/DashNotifications";
 import DashCategory from "../components/DashCategory";
+import DashAddInventory from "../components/DashAddInventory";
 
 
 export default function Dashboard() {
@@ -31,6 +32,8 @@ return (
       {tab === 'profile' && <DashProfile />}
       {/* inventory */}
       {tab ==='inventory'&&<DashInventory/>}
+      {/* addinventory */}
+       {tab ==='add-inventory'&&<DashAddInventory/>} 
       {/* category */}
       {tab ==='category'&&<DashCategory/>}
       {/* reports */}

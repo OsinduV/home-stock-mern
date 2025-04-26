@@ -31,11 +31,11 @@ export const addCategory = async (req, res, next) => {
 
 export const getallCategory  = async (req, res, next) => {
     try {
-        const categoty = await Category.find();
+        const category = await Category.find();
         
         res.json({
             msg: "All the categories are displayed!",
-            data: categoty, // Include the retrieved data
+            data: category, // Include the retrieved data
         });
 
     } catch (error) {

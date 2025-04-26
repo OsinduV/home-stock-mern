@@ -1,5 +1,7 @@
 import React from 'react'
 import axios from "axios";
+import HoverEffectButton from './HoverEffectButton';
+//import ParticlesBackground from './ParticlesBackground';
 
 const DashReports = () => {
     const downloadPDF = async () => {
@@ -38,10 +40,11 @@ const DashReports = () => {
   
     return (
       <div className="min-h-screen flex bg-gray-100">
+        
     {/* Sidebar (Assuming you have one) */}
-    <aside className="w-64 bg-gray-900 text-white p-4">
+     <aside className="w-64 bg-gray-900 text-white p-4">
         {/* Sidebar content here */}
-    </aside>
+    </aside> 
 
     {/* Main Content */}
     <div className="flex-grow bg-white p-6 rounded-2xl shadow-lg">
@@ -56,12 +59,12 @@ const DashReports = () => {
 
         {/* Buttons */}
         <div className="flex gap-4 mt-6">
-            <button onClick={downloadPDF} className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md transition">
-                Download PDF Report
-            </button>
-            <button onClick={downloadExcel} className="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg shadow-md transition">
-                Download Excel Report
-            </button>
+        <HoverEffectButton onClick={downloadPDF}>
+            Download PDF Report
+           </HoverEffectButton>
+           <HoverEffectButton onClick={downloadExcel}>
+            Download PDF Report
+           </HoverEffectButton>
         </div>
     </div>
 </div>

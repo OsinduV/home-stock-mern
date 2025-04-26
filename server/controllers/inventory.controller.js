@@ -59,9 +59,9 @@ export const getallInventry = async (req, res, next) => {
     }
 };
 
-export const getInventoryById = (req, res) => {
+export const getInventoryById = async(req, res) => {
     try {
-        const { id } = req.query; // If it's a query param
+        const id = req.params.id; // If it's a query param
         // const { id } = req.params; // Uncomment if using path params
 
         if (!id) {
@@ -72,7 +72,7 @@ export const getInventoryById = (req, res) => {
         //     return res.status(500).json({ msg: "Inventory data is missing or incorrect" });
         // }
 
-        const item = Inventory.find(i => i.id == id);
+        const item = await Inventory.findById(id);
 
         if (!item) {
             return res.status(404).json({ msg: "Item not found" });
@@ -93,14 +93,16 @@ export const updateInventory = async (req, res) => {
     try {
         const updatedInventory = await Inventory.findByIdAndUpdate(
             id, 
-            { name:name}, 
-            {category:category}, 
-            {quantity:quantity}, 
-            {price:price},
-            {supplier:supplier},
-            {description:description},
-            {createdAt:createdAt},
-            {updatedAt:updatedAt}, // Update only the provided fields
+            { 
+                name, 
+                category, 
+                quantity, 
+                price, 
+                supplier, 
+                description, 
+                createdAt, 
+                updatedAt 
+            }, // Pass all fields as a single object
             { new: true } // Return the updated document
         );
 
@@ -113,7 +115,6 @@ export const updateInventory = async (req, res) => {
         res.status(500).json({ msg: "Server error", error: error.message });
     }
 };
-
 
 
 export const deleteInventory = async(req,res)=>{

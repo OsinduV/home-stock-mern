@@ -72,7 +72,11 @@ export default function DashSidebar() {
           >Inventory
 
           </Sidebar.Item>
-
+          </Link>
+          <Link to="/dashboard?tab=add-inventory">
+            <Sidebar.Item active={tab === "addinventory"} icon={HiDocumentText} as="div">
+              ADD Inventory
+            </Sidebar.Item>
           </Link>
 
           <Link to="/dashboard?tab=category">
