@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import DashSidebar from "./DashSidebar";
+
 
 const DashUpdateInventory = () => {
   const { id } = useParams();
@@ -14,13 +16,13 @@ const DashUpdateInventory = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get(  
-          "/api/v1/products/all-inventory/by-id/" + id
-        );
+      try { 
+        const response = await axios.get(`/api/v1/products/all-inventory/by-id/${id}`);
+          // "/api/v1/products/all-inventory/by-id/" + id
+        //);
 
         if (response) {
           const result = await response.data;
@@ -29,7 +31,7 @@ const DashUpdateInventory = () => {
           setQunatity(result.data.quantity);
           setPrice(result.data.price);
           setSupplier(result.data.supplier);
-          setDescription(result.data.description)
+          setDescription(result.data.description);
           console.log(result.data);
         }
       } catch (error) {
@@ -40,20 +42,31 @@ const DashUpdateInventory = () => {
     fetchData();
   },[id]);
 
+  const validate = () => {
+    const newErrors = {};
+    if (!name.trim()) newErrors.name = "Name is required";
+    if (!category.trim()) newErrors.category = "Category is required";
+    if (!quantity || isNaN(quantity) || quantity <= 0) newErrors.quantity = "Quantity must be a valid positive number";
+    if (!price || isNaN(price) || price <= 0) newErrors.price = "Price must be a valid positive number";
+    if (!supplier.trim()) newErrors.supplier = "Supplier is required";
+    return newErrors;
+  };
+
   const updateData = async (e) => {
-    // e.preventDefault();
+     //e.preventDefault();
     try {
       const update = await axios.put(
-        "http://localhost:5000/api/v1/products/update-inventory/"+id,
-        { name:name, category:category, quantity:quantity, price:price, description:description }
+        `http://localhost:5000/api/v1/products/update-inventory/${id}`,
+        { name:name, category:category, quantity:quantity, price:price,supplier:supplier, description:description }
       );
 
       if(update){
         alert("update successful.");
-        navigate('/inventory-list')
+        navigate('/dashboard?tab=inventory');
+       
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 
@@ -66,21 +79,7 @@ const DashUpdateInventory = () => {
    
 //   };
 
-  const validate = () => {
-    const newErrors = {};
-    if (!formData.name) newErrors.name = "Name is required";
-    if (!formData.category) newErrors.category = "Category is required";
-    if (
-      !formData.quantity ||
-      isNaN(formData.quantity) ||
-      formData.quantity <= 0
-    )
-      newErrors.quantity = "Quantity must be a valid positive number";
-    if (!formData.price || isNaN(formData.price) || formData.price <= 0)
-      newErrors.price = "Price must be a valid positive number";
-    if (!formData.supplier) newErrors.supplier = "Supplier is required";
-    return newErrors;
-  };
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,35 +89,47 @@ const DashUpdateInventory = () => {
     const validationErrors = validate();
     setError(validationErrors);
 
+    if (Object.keys(validationErrors).length === 0) {
+      updateData();
+    }
 
+    if (Object.keys(validationErrors).length === 0) {
+      try {
+        updateData()
 
-    //if (Object.keys(validationErrors).length === 0) {
-    //   try {
-    //     updateData()
+        //const data = await res.json();
 
-    //     //const data = await res.json();
-
-    //     if (!res.ok) {
-    //       setError(data.message || "Something went wrong");
-    //       setLoading(false);
-    //       return;
-    //     }
-    //     navigate("/dashboard?tab=inventory");
-    //     setLoading(false);
-    //     setError(null);
-    //     setFormData({}); // Clear form data
-    //     // navigate("/dashboard?tab=inventory-list"); // Redirect to the Inventory page
-    //   } catch (error) {
-    //     setLoading(false);
-    //     setError("Network error. Please check your connection and try again.");
-    //   }
-    //}
+        if (!res.ok) {
+          setError(data.message || "Something went wrong");
+          setLoading(false);
+          return;
+        }
+        navigate("/dashboard?tab=inventory");
+        setLoading(false);
+        setError(null);
+        setFormData({}); // Clear form data
+         navigate("/dashboard?tab=inventory-list"); // Redirect to the Inventory page
+      } catch (error) {
+        setLoading(false);
+        setError("Network error. Please check your connection and try again.");
+      }
+    }
   };
   return (
-    <div className="max-w-lg p-3 mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">
-        Update Inventory
-      </h1>
+    <div className="flex min-h-screen">
+    {/* Sidebar */}
+    <div className="w-1/5 bg-gray-800">
+      <DashSidebar />
+    </div>
+  
+    {/* Main Content */}
+    <div className="flex-1 bg-gray-300 bg-cover bg-center p-6"
+      style={{ backgroundImage: "url('/images/i1_background.jpg')", backgroundOpacity: 0.5, transition: '0.5s' }}
+    >
+      <div className="max-w-lg p-5 mx-auto">
+        <h1 className="text-3xl font-semibold text-center my-7 text-red-600">
+          Update Inventory
+        </h1>
 
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         {/* Name */}
@@ -226,6 +237,9 @@ const DashUpdateInventory = () => {
 
       {error && <p className="text-red-500 mt-3">{error}</p>}
     </div>
+    </div>
+    </div>
+    
   );
 };
 

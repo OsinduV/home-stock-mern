@@ -34,7 +34,7 @@ export default function DashCategory() {
       axios.delete(`http://localhost:5000/api/v1/category/delete-category/${id}`)
         .then(() => {
           // Remove the item from the state after successful deletion
-          setCategory(category.filter(item => item.id !== id));
+          setCategory(category.filter(item => item._id !== id));
           alert('Category deleted successfully');
         })
         .catch(error => {
@@ -80,7 +80,7 @@ export default function DashCategory() {
               </button>
               {/* Delete Button */}
               <button
-                onClick={() => handleDeleteCategory(item.id)}
+                onClick={() => handleDeleteCategory(item._id)}
                 className="text-red-600 hover:text-red-800"
               >
                 <FontAwesomeIcon icon={faTrash} size="lg" />

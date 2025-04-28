@@ -15,6 +15,8 @@ import { Toaster } from "react-hot-toast";
 import DashAddInventory from "./components/DashAddInventory.jsx";
 import DashInventory from "./components/DashInventory.jsx";
 import DashUpdateInventory from "./components/DashUpdateInventory.jsx";
+import DashSidebar from "./components/DashSidebar.jsx";
+import DashAddCategory from "./components/DashAddCategory.jsx";
 
 export default function App() {
   
@@ -23,6 +25,7 @@ export default function App() {
 return (
     <BrowserRouter>
       <Header />
+      
       <Routes>
          <Route
           path="/"
@@ -57,6 +60,7 @@ return (
         <Route path = "/add-inventory"element={<DashAddInventory/>}/>
         <Route path = "/inventory-list" element={<DashInventory/>}/>
         <Route path="/update-inventory/:id" element={<DashUpdateInventory/>}/>
+        <Route path = "/add-category"element={<DashAddCategory/>}/>
       </Routes>
 
       <Toaster />

@@ -2,18 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer,toast} from 'react-toastify'
+import DashSidebar from "./DashSidebar";
 
 
 const AddInventoryForm = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    category: "",
-    quantity: "",
-    price: "",
-    supplier: "",
-    description: "",
-    createdAt: new Date().toISOString().split("T")[0],
-    updatedAt: new Date().toISOString().split("T")[0],
+    id: "",
+    category_name: "",
+    
   });
 
   const [error, setError] = useState({});
@@ -29,13 +25,9 @@ const AddInventoryForm = () => {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.category.trim()) newErrors.category = "Category is required";
-    if (!formData.quantity || isNaN(formData.quantity) || formData.quantity <= 0)
-      newErrors.quantity = "Quantity must be a valid positive number";
-    if (!formData.price || isNaN(formData.price) || formData.price <= 0)
-      newErrors.price = "Price must be a valid positive number";
-    if (!formData.supplier.trim()) newErrors.supplier = "Supplier is required";
+    if (!formData.id.trim()) newErrors.id = "ID is required";
+    if (!formData.category_name.trim()) newErrors.category_name = "Category Name is required";
+
     return newErrors;
   };
 
@@ -44,19 +36,20 @@ const AddInventoryForm = () => {
     const validationErrors = validate();
     setError(validationErrors);
 
-    if (Object.keys(validationErrors).length === 0) {
-      try {
-        setLoading(true);
-        const res = await fetch("/api/v1/products/add", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+     if (Object.keys(validationErrors).length === 0) {
+       try {
+         setLoading(true);
+         const res = await fetch("http://localhost:5000/api/v1/category/add-category", {
+           method: "POST",
+           headers: {
+             "Content-Type": "application/json",
+           },
           body: JSON.stringify(formData),
           
-        });
+         });
 
         const data = await res.json();
+        console.log('Response Data:', data);
 
         if (!res.ok) {
           setError({ general: data.message || "Something went wrong" });
@@ -67,18 +60,13 @@ const AddInventoryForm = () => {
 
         setLoading(false);
         setFormData({
-          name: "",
-          category: "",
-          quantity: "",
-          price: "",
-          supplier: "",
-          description: "",
-          createdAt: new Date().toISOString().split("T")[0],
-          updatedAt: new Date().toISOString().split("T")[0],
+          id: "",
+          category_name: "",
+         
         });
-        toast.success("Inventory added successfully!");
+        toast.success("Category added successfully!");
         setTimeout(() => {
-          navigate("/dashboard?tab=inventory");
+          navigate("/dashboard?tab=category");
         }, 1000);
       } catch (error) {
         setLoading(false);
@@ -86,21 +74,21 @@ const AddInventoryForm = () => {
         toast.error("Network error. Please check your connection and try again.");
       }
     }
-  };
+};
   
   return (
+    <div className="flex">
+       <DashSidebar/> 
     <div className="w-full max-w-screen-xl mx-auto p-6 min-h-screen bg-gray-300 bg-cover bg-center" 
     style={{ backgroundImage: "url('/images/i1_background.jpg')", backgroundOpacity: 0.5, transition:'0.5s'  }}>
     <div className="max-w-lg p-3 mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7 text-yellow-300">Add Inventory</h1>
+      <h1 className="text-3xl font-semibold text-center my-7 text-yellow-300">Add Category</h1>
 
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         {[
-          { id: "name", type: "text", placeholder: "Name" },
-          { id: "category", type: "text", placeholder: "Category" },
-          { id: "quantity", type: "number", placeholder: "Quantity" },
-          { id: "price", type: "number", placeholder: "Price" },
-          { id: "supplier", type: "text", placeholder: "Supplier" },
+          { id: "id", type: "text", placeholder: "ID" },
+          { id: "category_name", type: "text", placeholder: "Category Name" },
+          
         ].map(({ id, type, placeholder }) => (
           <div key={id}>
             <input
@@ -114,14 +102,6 @@ const AddInventoryForm = () => {
             {error[id] && <p className="text-red-500">{error[id]}</p>}
           </div>
         ))}
-
-        <textarea
-          placeholder="Description"
-          className="p-3 border rounded-lg w-full"
-          id="description"
-          value={formData.description}
-          onChange={handleChange}
-        ></textarea>
 
         {/* <input
           type="text"
@@ -146,12 +126,13 @@ const AddInventoryForm = () => {
           //  onClick={handleSubmit}
           
         >
-          {loading ? "Adding..." : "Add Inventory"}
+          {loading ? "Adding..." : "Add Category"}
         </button>
          <ToastContainer/> 
       </form>
 
       {error.general && <p className="text-red-500 mt-3">{error.general}</p>}
+    </div>
     </div>
     </div>
   );

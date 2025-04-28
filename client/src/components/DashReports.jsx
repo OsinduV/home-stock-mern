@@ -39,15 +39,17 @@ const DashReports = () => {
     };
   
     return (
-      <div className="min-h-screen flex bg-gray-100">
+      <div className="w-full max-w-screen-xl mx-auto p-6 min-h-screen bg-gray-300 bg-cover bg-center" 
+    style={{ backgroundImage: "url('/images/i1_background.jpg')", backgroundOpacity: 0.5, transition:'0.5s'  }}>
+      {/* <div className="min-h-screen flex bg-gray-100"> */}
         
     {/* Sidebar (Assuming you have one) */}
-     <aside className="w-64 bg-gray-900 text-white p-4">
+     {/* <aside className="w-64 bg-gray-900 text-white p-4"> */}
         {/* Sidebar content here */}
-    </aside> 
+    {/* </aside>  */}
 
     {/* Main Content */}
-    <div className="flex-grow bg-white p-6 rounded-2xl shadow-lg">
+    <div className="flex-grow bg-white p-3 rounded-2xl shadow-lg">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Inventory Report</h2>
 
         {/* Report Content */}
@@ -68,6 +70,7 @@ const DashReports = () => {
         </div>
     </div>
 </div>
+// </div>
 
 );
   };
