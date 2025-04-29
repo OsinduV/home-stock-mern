@@ -17,6 +17,7 @@ import DashInventory from "./components/DashInventory.jsx";
 import DashUpdateInventory from "./components/DashUpdateInventory.jsx";
 import DashSidebar from "./components/DashSidebar.jsx";
 import DashAddCategory from "./components/DashAddCategory.jsx";
+import DashUpdateCategory from "./components/DashUpdateCategory.jsx";
 
 export default function App() {
   
@@ -60,6 +61,7 @@ return (
         <Route path = "/add-inventory"element={<DashAddInventory/>}/>
         <Route path = "/inventory-list" element={<DashInventory/>}/>
         <Route path="/update-inventory/:id" element={<DashUpdateInventory/>}/>
+        <Route path="/update-category/:id" element={<DashUpdateCategory/>}/>
         <Route path = "/add-category"element={<DashAddCategory/>}/>
       </Routes>
 
