@@ -2,25 +2,26 @@ import express from 'express'
 import PDFDocument from 'pdfkit';
 import fs from "fs";
 import ExcelJS from "exceljs";
+import Inventory from '../models/inventory.model.js'
 
 const reportRouter = express.Router();
 
 // Sample inventory data (Replace with database query)
-const inventoryData = [
-    { name: "biscuit", category: "sweet",quantity:"1", price:450, supplier:"thoge aachchi",description:"that is a gift biscuit packate in 400g",createdAt:"2025-12-22T18:30:00.000Z",updatedAt:"2025-12-22T18:30:00.000Z"},
+// const inventoryData = [
+//     { name: "biscuit", category: "sweet",quantity:"1", price:450, supplier:"thoge aachchi",description:"that is a gift biscuit packate in 400g",createdAt:"2025-12-22T18:30:00.000Z",updatedAt:"2025-12-22T18:30:00.000Z"},
     
-  ];
+//   ];
   //Api route to generate pdf
-  reportRouter.get("/generate-pdf",(req,res)=>{
-    const doc = new PDFDocument();
-    const filePath = "inventory_report.pdf";
+  reportRouter.get("/generate-pdf",async(req,res)=>{
+    try{
+      const inventoryData = await Inventory.find();
+      const doc = new PDFDocument();
+      const filePath = "inventory_report.pdf";
 
+      // Pipe the document to a writable stream
+      doc.pipe(fs.createWriteStream(filePath));
     
-
-  // Pipe the document to a writable stream
-  doc.pipe(fs.createWriteStream(filePath));
-
-  // Title
+   // Title
   doc.fontSize(20).text("Inventory Report", { align: "center" });
   doc.moveDown();
 
@@ -43,10 +44,18 @@ const inventoryData = [
       fs.unlinkSync(filePath); // Delete after download
     });
   }, 1000);
-});
+}catch (err) {
+  console.error("Error generating PDF:", err);
+  res.status(500).json({ message: "Failed to generate PDF report." });
+}}
+);
 
 // API Route to Generate Excel
 reportRouter.get("/generate-excel", async (req, res) => {
+  try{
+
+    const inventoryData = await Inventory.find(); 
+
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Inventory Report");
 
@@ -77,6 +86,11 @@ res.download(filePath, "Inventory_Report.xlsx", (err) => {
     if (err) console.log("Error sending file:", err);
     fs.unlinkSync(filePath); // Delete after download
   });
+}
+catch(err){
+  console.error("Error generating Excel:", err);
+    res.status(500).json({ message: "Failed to generate Excel report." });
+}
 });
 
 export default reportRouter;

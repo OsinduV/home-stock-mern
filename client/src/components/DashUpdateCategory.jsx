@@ -20,13 +20,14 @@ const DashUpdateCategory = () => {
           // "/api/v1/products/all-inventory/by-id/" + id
         //);
 
-        if (response) {
-          const result = await response.data;
+        if (response && response.data) {
+          const result =  response.data;
           setCategory_Name(result.data.category_name);
+          console.log(result.data);
         
         }
       } catch (error) {
-        //console.log(error);
+        console.log(error);
       }
     };
 
@@ -35,7 +36,7 @@ const DashUpdateCategory = () => {
 
   const validate = () => {
     const newErrors = {};
-    if (!category_name.trim()) newErrors.name = "Name is required";
+    if (!category_name.trim()) newErrors.category_name = "Name is required";
    
     return newErrors;
   };
@@ -44,7 +45,7 @@ const DashUpdateCategory = () => {
      //e.preventDefault();
     try {
       const update = await axios.put(
-        `http://localhost:5000/api/v1/products/update-category/${id}`,
+        `http://localhost:5000/api/v1/category/update-category/${id}`,
         { category_name:category_name }
       );
 
@@ -96,7 +97,7 @@ const DashUpdateCategory = () => {
         setLoading(false);
         setError(null);
         setFormData({}); // Clear form data
-         navigate("/dashboard?tab=inventory-list"); // Redirect to the Inventory page
+         navigate("/dashboard?tab=category-list"); // Redirect to the Inventory page
       } catch (error) {
         setLoading(false);
         setError("Network error. Please check your connection and try again.");
@@ -128,7 +129,7 @@ const DashUpdateCategory = () => {
           id="category_name"
         //   placeholder={name}
           value = {category_name}
-          onChange={(e)=>{setName(e.target.value)}}
+          onChange={(e)=>{setCategory_Name(e.target.value)}}
         />
         {error?.name && <p className="text-red-500">{error.name}</p>}
 

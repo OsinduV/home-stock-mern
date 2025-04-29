@@ -65,7 +65,7 @@ const DashReports = () => {
             Download PDF Report
            </HoverEffectButton>
            <HoverEffectButton onClick={downloadExcel}>
-            Download PDF Report
+            Download Excel Report
            </HoverEffectButton>
         </div>
     </div>

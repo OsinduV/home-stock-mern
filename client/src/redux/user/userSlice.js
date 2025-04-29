@@ -62,6 +62,9 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    verifyUser: (state) => {
+      if (state.currentUser) state.currentUser.isVerified = true;
+    },
   },
 });
 
@@ -78,6 +81,7 @@ export const {
   signOutUserFailure,
   signOutUserStart,
   signOutUserSuccess,
+  verifyUser,
 } = userSlice.actions;
 
 export default userSlice.reducer;

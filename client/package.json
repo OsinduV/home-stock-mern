@@ -14,14 +14,20 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "axios": "^1.8.2",
     "dom": "^0.0.3",
+    "exceljs": "^4.4.0",
     "express": "^4.21.1",
     "firebase": "^11.4.0",
     "flowbite-react": "^0.10.2",
     "framer-motion": "^12.4.10",
     "jsonwebtoken": "^9.0.2",
+
     "lucide-react": "^0.482.0",
     "material": "^0.9.23",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
+
     "react": "^18.3.1",
+    "react-beautiful-dnd": "^13.1.1",
     "react-circular-progressbar": "^2.2.0",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.5.2",
@@ -30,18 +36,26 @@
     "react-router-dom": "^7.0.1",
     "react-toastify": "^11.0.5",
     "react-tsparticles": "^2.12.2",
+
+
     "redux": "^5.0.1",
     "router": "^2.1.0",
     "sass": "^1.85.1",
     "swiper": "^11.1.15",
+
     "tsparticles": "^3.8.1",
     "ui": "^0.2.4",
+
+    "xlsx": "^0.18.5",
+    "xlsx-style": "^0.8.13",
+
     "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.19.0",
@@ -49,7 +63,11 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.18",
     "globals": "^15.14.0",
+
     "postcss": "^8.5.3",
+
+    "http-proxy-middleware": "^3.0.3",
+
     "tailwindcss": "^3.4.17",
     "vite": "^6.1.0"
   }
