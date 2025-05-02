@@ -148,7 +148,7 @@ export default function DashSidebar() {
           </Sidebar.Item>
           </Link>
           
-          <Link to="/dashboard?tab=notifications">
+          {/* <Link to="/dashboard?tab=notifications">
           <Sidebar.Item 
           active = {tab ==="notifications"}
           icon={IoMdNotifications} 
@@ -156,7 +156,7 @@ export default function DashSidebar() {
           as = "div">
             Notifications
           </Sidebar.Item>
-          </Link>
+          </Link> */}
 
         
 

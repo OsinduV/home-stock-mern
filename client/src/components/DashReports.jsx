@@ -56,7 +56,7 @@ const DashReports = () => {
         <div className="border rounded-lg p-4 bg-gray-50 text-gray-700">
             <p className="mb-2"><strong>Total Items:</strong> 1</p>
             <p className="mb-2"><strong>Out of Stock:</strong> 5</p>
-            <p className="mb-2"><strong>Last Updated:</strong> March 20, 2025</p>
+            <p className="mb-2"><strong>Last Updated:</strong> May 3, 2025</p>
         </div>
 
         {/* Buttons */}
