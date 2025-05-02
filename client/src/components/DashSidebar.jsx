@@ -9,7 +9,6 @@ import {
 } from "react-icons/hi";
 import { TbReportSearch } from "react-icons/tb";
 import { BiSolidCategory } from "react-icons/bi";
-import { IoMdNotifications } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
