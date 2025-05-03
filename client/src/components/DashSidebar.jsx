@@ -7,6 +7,8 @@ import {
   HiAnnotation,
   HiChartPie,
 } from "react-icons/hi";
+import { TbReportSearch } from "react-icons/tb";
+import { BiSolidCategory } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -86,6 +88,18 @@ export default function DashSidebar() {
               Profile
             </Sidebar.Item>
           </Link>
+          
+          
+
+          <Link to ="/dashboard?tab=inventory">
+          <Sidebar.Item
+           active={tab ==="inventory"}
+           icon={HiDocumentText}
+           as="div"
+          >Inventory
+          </Sidebar.Item>
+          </Link>
+
 
           <Link to="/dashboard?tab=shopping-list">
             <Sidebar.Item
@@ -97,13 +111,66 @@ export default function DashSidebar() {
             </Sidebar.Item>
           </Link>
 
+
+          <Link to="/dashboard?tab=shopping-list">
+            <Sidebar.Item
+              active={tab === "shopping-list"}
+              icon={FaShoppingBasket}
+              as="div"
+            >
+              Shopping-List
+            </Sidebar.Item>
+          </Link>
+
+
           <Sidebar.Item
             icon={HiArrowSmRight}
             className="cursor-pointer"
             onClick={handleSignout}
           >
             Sign Out
+
           </Sidebar.Item>
+          
+          <Link to="/dashboard?tab=add-inventory">
+            <Sidebar.Item active={tab === "addinventory"} icon={HiDocumentText} as="div">
+              ADD Inventory
+            </Sidebar.Item>
+          </Link>
+
+          <Link to="/dashboard?tab=category">
+          <Sidebar.Item 
+          active = {tab ==="category"}
+          icon={BiSolidCategory} 
+          className="cursor-pointer" 
+          as = "div">
+            Category
+          </Sidebar.Item>
+          </Link>
+
+          <Link to = "/dashboard?tab=reports">
+          <Sidebar.Item 
+          active = {tab === "reports"}
+          icon={TbReportSearch} 
+          className="cursor-pointer"
+          as="div"
+           >
+            Reports
+          </Sidebar.Item>
+          </Link>
+          
+          {/* <Link to="/dashboard?tab=notifications">
+          <Sidebar.Item 
+          active = {tab ==="notifications"}
+          icon={IoMdNotifications} 
+          className="cursor-pointer" 
+          as = "div">
+            Notifications
+          </Sidebar.Item>
+          </Link> */}
+
+        
+
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
