@@ -14,7 +14,7 @@ import ShoppingList from "./pages/ShoppingList.jsx"; // Import the ShoppingList 
 import { ShoppingListProvider } from "./context/ShoppingListContext"; // yumeth-shopping-list
 import { Toaster } from "react-hot-toast";
 
-import ReceiptScanning from "./pages/ReceiptScanning.jsx";
+import ReceiptScanning from "./pages/receiptScanner/ReceiptScanning.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
 import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 
