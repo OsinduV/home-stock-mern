@@ -475,26 +475,63 @@ export default function ShoppingList() {
           </div>
         )}
         
-        {/* Share button */}
         {shoppingList.length > 0 && (
-          <div className="mt-6 border-t pt-4">
-            <button
-              onClick={() => {
-                // Generate a shareable link or copy list to clipboard
-                const listText = shoppingList
-                  .map(item => `${item.itemName} (${item.quantity}) - ${item.category}`)
-                  .join('\n');
-                
-                navigator.clipboard.writeText(listText)
-                  .then(() => toast.success("Shopping list copied to clipboard!"))
-                  .catch(() => toast.error("Failed to copy list"));
-              }}
-              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-            >
-              Share List
-            </button>
-          </div>
-        )}
+  <div className="mt-6 border-t pt-4">
+    <button
+      onClick={async () => {
+        try {
+          // Dynamically import jsPDF and autoTable
+          const { jsPDF } = await import("jspdf");
+          await import("jspdf-autotable"); // Side effect import (auto-injects into jsPDF)
+          
+          // Initialize PDF
+          const doc = new jsPDF();
+          
+          // Add title
+          doc.setFontSize(18);
+          doc.text("Shopping List Report", 14, 22);
+          
+          // Add date
+          doc.setFontSize(11);
+          doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 30);
+          
+          // Table data
+          const tableData = shoppingList.map((item, index) => [
+            index + 1,
+            item.itemName,
+            item.category,
+            item.quantity,
+            item.priority,
+            item.status ? "Purchased" : "Pending",
+            new Date(item.createdAt).toLocaleDateString(),
+          ]);
+          
+          // Generate table
+          doc.autoTable({
+            startY: 35,
+            head: [["#", "Item Name", "Category", "Qty", "Priority", "Status", "Added Date"]],
+            body: tableData,
+            theme: "grid",
+            headStyles: {
+              fillColor: [34, 139, 34], // Green header
+              textColor: 255, // White text
+            },
+          });
+          
+          // Save PDF
+          doc.save("shopping-list-report.pdf");
+          toast.success("PDF generated successfully!");
+        } catch (error) {
+          console.error("PDF generation failed:", error);
+          toast.error("Failed to generate PDF");
+        }
+      }}
+      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+    >
+      Generate PDF Report
+    </button>
+  </div>
+)}
       </div>
       
       {/* Statistics Section */}
