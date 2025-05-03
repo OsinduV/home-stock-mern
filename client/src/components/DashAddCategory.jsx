@@ -7,7 +7,7 @@ import DashSidebar from "./DashSidebar";
 
 const AddInventoryForm = () => {
   const [formData, setFormData] = useState({
-    id: "",
+    category_id: "",
     category_name: "",
     
   });
@@ -25,7 +25,7 @@ const AddInventoryForm = () => {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.id.trim()) newErrors.id = "ID is required";
+    if (!formData.category_id.trim()) newErrors.category_id = "ID is required";
     if (!formData.category_name.trim()) newErrors.category_name = "Category Name is required";
 
     return newErrors;
@@ -60,7 +60,7 @@ const AddInventoryForm = () => {
 
         setLoading(false);
         setFormData({
-          id: "",
+          category_id: "",
           category_name: "",
          
         });
@@ -86,7 +86,7 @@ const AddInventoryForm = () => {
 
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         {[
-          { id: "id", type: "text", placeholder: "ID" },
+          { id: "category_id", type: "text", placeholder: "ID" },
           { id: "category_name", type: "text", placeholder: "Category Name" },
           
         ].map(({ id, type, placeholder }) => (
