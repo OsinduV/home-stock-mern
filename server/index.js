@@ -10,9 +10,13 @@ import ocrRoutes from "./routes/ocr.route.js"
 import shoppingListRoutes from "./routes/shoppingList.route.js";
 import homeRoute from "./routes/user.home.route.js"
 import cors from "cors"
+import productRouter from "./routes/products.route.js";
+import reportRouter from "./routes/reports.route.js";
+import categoryRouter from "./routes/category.route.js";
 
 
 const app = express();
+
 
 dotenv.config();
 app.use(
@@ -23,25 +27,22 @@ app.use(
 );
 
 
-
-
-
-
-
 // app.use(cors({origin:"http://localhost:5173",credentials:true}));
-
-
-
 app.use(express.json()); // allows to parse incoming requests:req:body
 
 app.use(cookieParser()); // allow pass incoming cookies
-
 
 app.use("/api/auth",authRouter);
 app.use("/api/user",userRoutes);
 app.use("/api/ocr",ocrRoutes);
 app.use("/api/shopping-list", shoppingListRoutes);
 app.use("/api/home",homeRoute);
+
+
+//Routes MIddleware
+app.use("/api/v1/products",productRouter);
+app.use("/api/reports",reportRouter)
+app.use("/api/v1/category",categoryRouter)
 
 mongoose
   .connect(process.env.MONGO)
@@ -66,3 +67,4 @@ app.use((err, req, res, next) => {
     message,
   });
 });
+

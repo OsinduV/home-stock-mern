@@ -13,6 +13,13 @@ import EmailVerificationPage from "./pages/EmailVerificationPage.jsx";
 import ShoppingList from "./pages/ShoppingList.jsx"; // Import the ShoppingList component
 import { ShoppingListProvider } from "./context/ShoppingListContext"; // yumeth-shopping-list
 import { Toaster } from "react-hot-toast";
+import DashAddInventory from "./components/DashAddInventory.jsx";
+import DashInventory from "./components/DashInventory.jsx";
+import DashUpdateInventory from "./components/DashUpdateInventory.jsx";
+import DashSidebar from "./components/DashSidebar.jsx";
+import DashAddCategory from "./components/DashAddCategory.jsx";
+import DashUpdateCategory from "./components/DashUpdateCategory.jsx";
+
 
 import ReceiptScanning from "./pages/ReceiptScanning.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
@@ -35,6 +42,7 @@ export default function App() {
     return <Navigate to="/verify-email" replace />;
   }
 
+
   return children;
 };
 
@@ -46,10 +54,12 @@ const RedirectAuthenticatedUser = ({ children }) => {
 
   return children;
 };
+
   
   return (
     <BrowserRouter>
       <ShoppingListProvider>
+
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -98,7 +108,28 @@ const RedirectAuthenticatedUser = ({ children }) => {
               </RedirectAuthenticatedUser>
             }
           />
-        </Routes>
+        <Route path = "/add-inventory"element={<DashAddInventory/>}/>
+        <Route path = "/inventory-list" element={<DashInventory/>}/>
+        <Route path="/update-inventory/:id" element={<DashUpdateInventory/>}/>
+        <Route path="/update-category/:id" element={<DashUpdateCategory/>}/>
+        <Route path = "/add-category"element={<DashAddCategory/>}/>
+
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/receipt-scanning" element={<ReceiptScanning />} />
+
+
+        <Route
+        path="/reset-password/:token"
+        element={
+          <RedirectAuthenticatedUser>
+            <ResetPasswordPage />
+          </RedirectAuthenticatedUser>
+        }
+      />
+        
+
+      </Routes>
+
 
         <Toaster />
 
