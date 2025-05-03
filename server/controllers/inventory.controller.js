@@ -3,14 +3,7 @@ import Inventory from "../models/inventory.model.js";
 
 export const addInventoryItem = async (req, res, next) => {
   try {
-    const {
-      name,
-      category,
-      quantity,
-      price,
-      supplier,
-      description,
-    } = req.body;
+    const { name, category, quantity, price, supplier, description } = req.body;
 
     if (
       !name ||
@@ -34,11 +27,11 @@ export const addInventoryItem = async (req, res, next) => {
       quantity,
       price,
       supplier,
-      description
+      description,
     });
 
-    if(!newInventory){
-        return res.status(400).json({msg:"Error for adding data."})
+    if (!newInventory) {
+      return res.status(400).json({ msg: "Error for adding data." });
     }
 
     await newInventory.save();
@@ -81,7 +74,7 @@ export const getInventoryById = async (req, res) => {
     // }
 
     const item = await Inventory.findById(id);
-    
+
     if (!item) {
       return res.status(404).json({ msg: "Item not found" });
     }
@@ -106,8 +99,8 @@ export const updateInventory = async (req, res) => {
     updatedAt,
   } = req.body; // Get new data from request body
 
-   // Input validation
-   if (!name || !category || !quantity || !price || !supplier) {
+  // Input validation
+  if (!name || !category || !quantity || !price || !supplier) {
     return res.status(400).json({ msg: "All fields are required" });
   }
 
@@ -119,7 +112,6 @@ export const updateInventory = async (req, res) => {
   if (isNaN(price) || price <= 0) {
     return res.status(400).json({ msg: "Price must be a positive number" });
   }
-
 
   try {
     const updatedInventory = await Inventory.findByIdAndUpdate(
@@ -158,5 +150,30 @@ export const deleteInventory = async (req, res) => {
     res.json({ msg: "Inventory deleted successfully!" });
   } catch (error) {
     res.status(500).json({ msg: "Server error", error: error.message });
+  }
+};
+
+export const addMultipleInventoryItems = async (req, res, next) => {
+  try {
+    const items = req.body;
+
+    if (!Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ msg: "No items to insert" });
+    }
+
+    const formattedItems = items.map((item) => ({
+      name: item.itemname,
+      category: item.category,
+      quantity: item.quantity,
+      price: item.price,
+      supplier: item.supplier || "Unknown",
+      description: item.description || "Scanned from receipt",
+    }));
+
+    await Inventory.insertMany(formattedItems);
+
+    res.status(201).json({ msg: "Items added successfully!" });
+  } catch (error) {
+    next(error);
   }
 };
