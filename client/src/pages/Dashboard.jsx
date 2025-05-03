@@ -6,6 +6,7 @@ import ShoppingList from '../pages/ShoppingList';
 import DashUsers from "../components/DashUsers";
 import DashboardComp from "../components/DashboardComp";
 import { useSelector } from "react-redux";
+import HomeCreate from "./HomeCreate";
 export default function Dashboard() {
     const { currentUser } = useSelector((state) => state.user);
   const location = useLocation();
@@ -28,8 +29,9 @@ return (
     </div>
     {/* profile... */}
 
-    
+
     {tab === "profile" && <DashProfile />}
+    
     {tab === "shopping-list" && <ShoppingList />}
 
     {/* users */}
@@ -39,7 +41,9 @@ return (
     {/* users */}
 
     {tab === "dash" && <DashboardComp />}
-    
+
+    {/* home create */}
+    {tab === "home" && <HomeCreate />}
   </div>
 );
 }

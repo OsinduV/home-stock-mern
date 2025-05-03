@@ -19,6 +19,8 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
 import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 
 import { useSelector } from "react-redux";
+import HomeCreate from "./pages/HomeCreate.jsx";
+import AcceptInvite from "./pages/AcceptInvite.jsx";
 
 export default function App() {
   
@@ -48,63 +50,61 @@ const RedirectAuthenticatedUser = ({ children }) => {
   return (
     <BrowserRouter>
       <ShoppingListProvider>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        
-        <Route
-        path="/sign-in"
-        element={
-          <RedirectAuthenticatedUser>
-            <SignIn />
-          </RedirectAuthenticatedUser>
-        }
-        />
-        
-         <Route
-        path="/sign-up"
-        element={
-          <RedirectAuthenticatedUser>
-            <SignUp />
-          </RedirectAuthenticatedUser>
-        }
-      />
-          
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/home-create" element={<HomeCreate />} />
+          <Route path="/invite/accept/:token" element={<AcceptInvite />} />
           <Route
-        path="/forgot-password"
-        element={
-          <RedirectAuthenticatedUser>
-            <ForgotPasswordPage />
-          </RedirectAuthenticatedUser>
-        }
-      />
-          
-          
-          
-        <Route path="/about" element={<About />} />
-        <Route path="/verify-email" element={<EmailVerificationPage />} />
+            path="/sign-in"
+            element={
+              <RedirectAuthenticatedUser>
+                <SignIn />
+              </RedirectAuthenticatedUser>
+            }
+          />
 
-        <Route element={<PrivateRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/receipt-scanning" element={<ReceiptScanning />} />
-        </Route>
+          <Route
+            path="/sign-up"
+            element={
+              <RedirectAuthenticatedUser>
+                <SignUp />
+              </RedirectAuthenticatedUser>
+            }
+          />
 
-        <Route
-        path="/reset-password/:token"
-        element={
-          <RedirectAuthenticatedUser>
-            <ResetPasswordPage />
-          </RedirectAuthenticatedUser>
-        }
-      />
-        
-      </Routes>
+          <Route
+            path="/forgot-password"
+            element={
+              <RedirectAuthenticatedUser>
+                <ForgotPasswordPage />
+              </RedirectAuthenticatedUser>
+            }
+          />
 
-    <Toaster />
+          <Route path="/about" element={<About />} />
+          <Route path="/verify-email" element={<EmailVerificationPage />} />
 
-    <Footer />
-  </ShoppingListProvider>
-  </BrowserRouter>
-);
+          <Route element={<PrivateRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/receipt-scanning" element={<ReceiptScanning />} />
+          </Route>
+
+          <Route
+            path="/reset-password/:token"
+            element={
+              <RedirectAuthenticatedUser>
+                <ResetPasswordPage />
+              </RedirectAuthenticatedUser>
+            }
+          />
+        </Routes>
+
+        <Toaster />
+
+        <Footer />
+      </ShoppingListProvider>
+    </BrowserRouter>
+  );
 
 }
