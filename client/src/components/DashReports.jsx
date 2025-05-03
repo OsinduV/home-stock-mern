@@ -1,25 +1,55 @@
-import React from 'react'
+import React from 'react';
 import axios from "axios";
 import HoverEffectButton from './HoverEffectButton';
 //import ParticlesBackground from './ParticlesBackground';
 
 const DashReports = () => {
-    const downloadPDF = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/reports/generate-pdf", {
-          responseType: "blob", // Handle binary files
-        });
-  
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", "Inventory_Report.pdf");
-        document.body.appendChild(link);
-        link.click();
-      } catch (error) {
-        console.error("Error downloading PDF:", error);
-      }
-    };
+  const downloadPDF = async () => {
+  try {
+    console.log("Starting PDF download...");
+    
+    const response = await axios.get("http://localhost:5000/api/reports/generate-pdf", {
+      responseType: "blob",
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/pdf'
+      },
+      params: {
+        reportType: 'styled', // Tell backend to generate styled PDF
+        title: 'Inventory Report',
+        data: JSON.stringify({
+          totalItems: 1,
+          outOfStock: 5,
+          lastUpdated: 'May 3, 2025'
+          // Add any other data you want in the report
+        })
+      },
+      timeout: 30000
+    });
+
+    if (!response.data) {
+      throw new Error("No data received from server");
+    }
+
+    const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `Inventory_Report_${new Date().toISOString().slice(0,10)}.pdf`);
+    
+    document.body.appendChild(link);
+    link.click();
+    
+    setTimeout(() => {
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    }, 100);
+
+    console.log("PDF downloaded successfully");
+  } catch (error) {
+    console.error("Error downloading PDF:", error);
+    alert(`Failed to download PDF: ${error.message}`);
+  }
+};
   
     const downloadExcel = async () => {
       try {

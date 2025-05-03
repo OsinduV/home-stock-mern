@@ -68,12 +68,12 @@ export default function DashCategory() {
       <tbody>
         {category.map(item => (
           <tr key={item._id} className="border-b hover:bg-gray-100">
-            <td className="px-4 py-2">{item.id}</td> 
+            <td className="px-4 py-2">{item.category_id}</td> 
             <td className="px-4 py-2">{item.category_name}</td>
             <td className="px-4 py-2 flex space-x-4 justify-center">
               {/* Edit Button */}
               <button
-                onClick={() => handleEditCategory(item.id)}
+                onClick={() => handleEditCategory(item._id)}
                 className="text-yellow-600 hover:text-green-800"
               >
                 <FontAwesomeIcon icon={faEdit} size="lg" />

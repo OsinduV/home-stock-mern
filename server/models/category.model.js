@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema(
     {
-        id:{
+        category_id:{
             type: Number,
             required: [true, "Item name is required"],
             trim: true,
+            unique:[true]
         },
         category_name:{
             type: String,
