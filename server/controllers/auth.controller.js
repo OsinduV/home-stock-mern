@@ -7,9 +7,6 @@ import crypto from "crypto";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 // import { sentVerificationEmail } from "../mailtrap/emails.js";
 
-
-
-
 import {
   sendEmail,
   sendWelcomeEmail,
@@ -17,29 +14,20 @@ import {
   sendResetSuccessEmail,
 } from "../mailtrap/mailtrap.config.js";
 
-
-
-
-
-
 export const signup = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password,isAdmin } = req.body;
 
     // Validate input fields
     if (!email || !username || !password) {
-    
       return next(errorHandler(400, "All details are required"));
-      
     }
 
     // Check if the user already exists
     const userAlreadyExists = await User.findOne({ email });
 
     if (userAlreadyExists) {
-
-      return next(errorHandler(400,"User already exists"));
-     
+      return next(errorHandler(400, "User already exists"));
     }
 
     // Hash the password
@@ -53,94 +41,65 @@ export const signup = async (req, res, next) => {
       email,
       password: hashedPassword,
       verificationToken,
-      verificationTokenExpiresAt: Date.now() + 15* 60 * 1000, // 15 minutes expiration
+      verificationTokenExpiresAt: Date.now() + 15 * 60 * 1000, // 15 minutes expiration
     });
 
     // Save user to the database
     await newUser.save();
 
     // Generate JWT token and set cookie
-    const restToken=generateTokenAndSetCookie(res, newUser._id);
-
-
-
-    
-
-
-
-
+    const restToken = generateTokenAndSetCookie(res, newUser._id);
 
     // Send verification email
     await sendEmail({
       email: newUser.email,
       subject: `Hello ${newUser.username}! Verify your email for HomeStock SignUp `,
       verificationToken: verificationToken,
-      category:"Email Verification"
+      category: "Email Verification",
     });
 
     console.log("Verification Token:", verificationToken);
     return next(errorHandler(201, "User created successfully!"));
-  
   } catch (error) {
     console.error("Signup Error:", error);
 
     // Ensure we only delete the user if it was created
-   
 
     next(error);
   }
 };
 
+export const verifyEmail = async (req, res, next) => {
+  const { code } = req.body;
 
-export const verifyEmail = async (req, res,next) => {
-const {code}=req.body;
+  try {
+    const user = await User.findOne({
+      verificationToken: code,
+      verificationTokenExpiresAt: { $gt: Date.now() },
+    });
 
-try{
-  const user=await User.findOne(
-    {
-      verificationToken:code,
-      verificationTokenExpiresAt:{$gt:Date.now()}
+    if (!user) {
+      return next(errorHandler(400, "Invalid or expired verification code "));
     }
-  );
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    user.verificationTokenExpiresAt = undefined;
+    await user.save();
 
-  if(!user)
-  {
-    
-    return next(errorHandler(400, "Invalid or expired verification code "));
+    await sendWelcomeEmail({
+      email: user.email,
+      subject: `Hello ${user.username}! successfully Verified your email in HomeStock  `,
+      username: user.username,
+      category: "Email Verification",
+    });
 
-    
+    return next(errorHandler(200, "Email verified successfully"));
+  } catch (error) {
+    console.log("error verified email", email);
+
+    return next(errorHandler(500, "user not verified server error"));
   }
-user.isVerified=true;
-user.verificationToken=undefined;
-user.verificationTokenExpiresAt=undefined;
-await user.save();
-
- await sendWelcomeEmail({
-   email: user.email,
-   subject: `Hello ${user.username}! successfully Verified your email in HomeStock  `,
-   username:user.username,
-   category: "Email Verification",
- });
-
-
- return next(errorHandler(200, "Email verified successfully"));
-
-}
-catch(error)
-{
-  console.log('error verified email',email);
-
-
-return next(errorHandler(500, "user not verified server error"));
-}
-
-
-
 };
-
-
-
-
 
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
@@ -155,7 +114,7 @@ export const signin = async (req, res, next) => {
     if (!validPassword) return next(errorHandler(401, "Wrong credentials!"));
 
     // Generate JWT token
-    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: validUser._id,isAdmin: validUser.isAdmin}, process.env.JWT_SECRET, {
       expiresIn: "1h", // Optional: Add expiration time for security
     });
 
@@ -176,12 +135,11 @@ export const signin = async (req, res, next) => {
   }
 };
 
-
 export const google = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: user._id,isAdmin:user.isAdmin }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = user._doc;
       res
         .cookie("access_token", token, { httpOnly: true })
@@ -205,7 +163,7 @@ export const google = async (req, res, next) => {
       });
 
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: newUser._id,isAdmin:newUser.isAdmin }, process.env.JWT_SECRET);
 
       const { password: pass, ...rest } = newUser._doc;
       res
@@ -218,18 +176,14 @@ export const google = async (req, res, next) => {
   }
 };
 
-
-
 export const forgotPassword = async (req, res, next) => {
   const { email } = req.body;
-
+console.log(email);
   try {
     const user = await User.findOne({ email });
 
     if (!user) {
-    
-
-        return next(errorHandler(400,"User not found"));
+      return next(errorHandler(400, "User not found"));
     }
 
     // Generate a secure reset token
@@ -251,23 +205,18 @@ export const forgotPassword = async (req, res, next) => {
       category: "Password Reset",
     });
 
-  
-      return next(errorHandler(200, "Password reset link sent to your email"));
+    return next(errorHandler(200, "Password reset link sent to your email"));
   } catch (error) {
     console.log("Error in forgotPassword:", error);
-    
 
-    return next(errorHandler(500,"Internal server error"));
+    return next(error);
   }
 };
 
-
-
-
-export const resetPassword = async (req, res,next) => {
+export const resetPassword = async (req, res, next) => {
   try {
     const { token } = req.params;
-    const {password}=req.body;
+    const { password } = req.body;
 
     // Find user with the given reset token & check expiration
     const user = await User.findOne({
@@ -277,9 +226,7 @@ export const resetPassword = async (req, res,next) => {
 
     // Validate user & token
     if (!user) {
-     
-
-        return next(errorHandler(400, "Invalid or expired reset token"));
+      return next(errorHandler(400, "Invalid or expired reset token"));
     }
 
     // Hash new password
@@ -294,21 +241,17 @@ export const resetPassword = async (req, res,next) => {
     await user.save();
 
     // Send success email (optional)
-    await sendResetSuccessEmail({email:user.email});
+    await sendResetSuccessEmail({ email: user.email });
 
-   
-
-      return next(errorHandler(200, "Password reset successfully"));
+    return next(errorHandler(200, "Password reset successfully"));
   } catch (error) {
     console.log("Error in resetPassword:", error);
-    
-      return next(
-        errorHandler(500, "Something went wrong. Please try again later.")
-      );
+
+    return next(
+      errorHandler(500, "Something went wrong. Please try again later.")
+    );
   }
 };
-
-
 
 export const checkAuth = async (req, res, next) => {
   try {
@@ -322,9 +265,8 @@ export const checkAuth = async (req, res, next) => {
     console.log("User found:", user);
     res.status(200).json({
       success: true,
-      user
+      user,
     });
-    
   } catch (error) {
     console.log("Error checking auth:", error);
     return next(

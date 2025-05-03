@@ -136,3 +136,31 @@ export const WELCOME_EMAIL_TEMPLATE = `
 </body>
 </html>
 `;
+export const INVITATION_EMAIL_TEMPLATE = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitation to Join a Home</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: linear-gradient(to right, #4CAF50, #45a049); padding: 20px; text-align: center;">
+    <h1 style="color: white; margin: 0;">You're Invited to Join a Home</h1>
+  </div>
+  <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <p>Hello,</p>
+    <p>You have been invited to join a home on our platform. If you were not expecting this invitation, please ignore this email.</p>
+    <p>To accept the invitation and join the home, click the button below:</p>
+    <div style="text-align: center; margin: 30px 0;">
+      <a href="{invitationURL}" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Join Home</a>
+    </div>
+    <p>This link will expire in 1 hour for security reasons.</p>
+    <p>Best regards,<br>Your HomeStock Team</p>
+  </div>
+  <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
+    <p>This is an automated message, please do not reply to this email.</p>
+  </div>
+</body>
+</html>
+`;
