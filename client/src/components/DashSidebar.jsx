@@ -111,6 +111,18 @@ export default function DashSidebar() {
             </Sidebar.Item>
           </Link>
 
+
+          <Link to="/dashboard?tab=shopping-list">
+            <Sidebar.Item
+              active={tab === "shopping-list"}
+              icon={FaShoppingBasket}
+              as="div"
+            >
+              Shopping-List
+            </Sidebar.Item>
+          </Link>
+
+
           <Sidebar.Item
             icon={HiArrowSmRight}
             className="cursor-pointer"

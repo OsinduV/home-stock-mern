@@ -27,6 +27,11 @@ import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 
 import { useSelector } from "react-redux";
 
+import ReceiptScanning from "./pages/ReceiptScanning.jsx";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
+import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
+
+import { useSelector } from "react-redux";
 
 export default function App() {
   
@@ -41,6 +46,7 @@ export default function App() {
     return <Navigate to="/verify-email" replace />;
   }
 
+
   return children;
 };
 
@@ -52,6 +58,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
 
   return children;
 };
+
   
   return (
     <BrowserRouter>
@@ -60,16 +67,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
       
       <Routes>
 
-         <Route
-          path="/"
-          element={
-          
-              <Home />
-          
-          }
-          />
-
-      
+        <Route path="/" element={<Home />} />
         
         <Route
         path="/sign-in"
@@ -78,7 +76,6 @@ const RedirectAuthenticatedUser = ({ children }) => {
             <SignIn />
           </RedirectAuthenticatedUser>
         }
-
         />
         
          <Route
@@ -89,6 +86,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
           </RedirectAuthenticatedUser>
         }
       />
+
           
           <Route
         path="/forgot-password"
@@ -99,6 +97,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
         }
       />
           
+
           
           
         <Route path="/about" element={<About />} />
@@ -116,7 +115,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/receipt-scanning" element={<ReceiptScanning />} />
-      
+
 
         <Route
         path="/reset-password/:token"

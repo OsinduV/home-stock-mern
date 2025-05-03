@@ -68,17 +68,22 @@ import { useSelector } from "react-redux"; // <-- you missed this import!
 
 import DashSidebar from '../components/DashSidebar';
 import DashProfile from '../components/DashProfile';
+
 import DashInventory from "../components/DashInventory";
 import DashReports from "../components/DashReports";
 import DashNotifications from "../components/DashNotifications";
 import DashCategory from "../components/DashCategory";
 import DashAddInventory from "../components/DashAddInventory";
-// import ShoppingList from "../components/ShoppingList"; // <-- add missing imports
-// import DashUsers from "../components/DashUsers";       // <-- add missing imports
-// import DashboardComp from "../components/DashboardComp"; // <-- add missing imports
+import ShoppingList from '../pages/ShoppingList';
+import DashUsers from "../components/DashUsers";
+import DashboardComp from "../components/DashboardComp";
+import ShoppingList from '../pages/ShoppingList';
+import DashUsers from "../components/DashUsers";
+import DashboardComp from "../components/DashboardComp";
 
 export default function Dashboard() {
   const { currentUser } = useSelector((state) => state.user); // <-- you missed importing useSelector
+
   const location = useLocation();
   const [tab, setTab] = useState("");
 
@@ -109,6 +114,21 @@ export default function Dashboard() {
         {tab === 'users' && <DashUsers />}
         {/* {tab === 'dash' && <DashboardComp />} */}
       </div>
-    </div>
-  );
+
+    {/* profile... */}
+
+    
+    {tab === "profile" && <DashProfile />}
+    {tab === "shopping-list" && <ShoppingList />}
+
+    {/* users */}
+
+    {tab === "users" && <DashUsers />}
+
+    {/* users */}
+
+    {tab === "dash" && <DashboardComp />}
+    
+  </div>
+);
 }

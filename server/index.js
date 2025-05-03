@@ -17,6 +17,8 @@ import categoryRouter from "./routes/category.route.js";
 
 const app = express();
 
+const app = express();
+
 dotenv.config();
 app.use(
   cors({
@@ -26,39 +28,21 @@ app.use(
 );
 
 
-
-
-
-
-
 // app.use(cors({origin:"http://localhost:5173",credentials:true}));
-
-
-
 app.use(express.json()); // allows to parse incoming requests:req:body
 
 app.use(cookieParser()); // allow pass incoming cookies
-
 
 app.use("/api/auth",authRouter);
 app.use("/api/user",userRoutes);
 app.use("/api/ocr",ocrRoutes);
 app.use("/api/shopping-list", shoppingListRoutes);
 
+
 //Routes MIddleware
 app.use("/api/v1/products",productRouter);
 app.use("/api/reports",reportRouter)
 app.use("/api/v1/category",categoryRouter)
-
-app.use((err,req,res,next) =>{
-  const statusCode = err.statusCode || 500;
-  const message = err.message || "internel server error";
-  res.status(statusCode).json({
-    sucess:false,
-    statusCode,
-    message,
-  })
-})
 
 mongoose
   .connect(process.env.MONGO)
@@ -69,7 +53,18 @@ mongoose
     console.log(err);
   });
 
+app.listen(5000, () => {
+  console.log("Server is running on 5000!!!!");
+});
 
-app.listen(5000,()=>{
-  console.log("server is running on port 5000!");
-})
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal server error";
+
+  return res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message,
+  });
+});
+
