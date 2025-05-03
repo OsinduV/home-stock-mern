@@ -1,4 +1,4 @@
-// Receipt Scanning Page with Editable Fields for Each Extracted Item in Modal
+// Enhanced Receipt Scanning UI with Editable, Deletable, Addable Extracted Items
 import React, { useState } from "react";
 import {
   Button,
@@ -20,8 +20,12 @@ import {
 import { app } from "../../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { useNavigate } from "react-router-dom";
+import { HiPlus, HiTrash } from "react-icons/hi";
 
 export default function ReceiptScannerNew() {
+  const navigate = useNavigate();
+
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [uploadProgress, setUploadProgress] = useState(null);
@@ -34,7 +38,6 @@ export default function ReceiptScannerNew() {
   ]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
   const [resultModalOpen, setResultModalOpen] = useState(true);
 
   const validCategories = ["Dairy", "Bakery", "Meat", "Fruits", "Vegetables", "Snacks", "Beverages", "Household", "Frozen", "Personal Care", "Uncategorized"];
@@ -93,6 +96,33 @@ export default function ReceiptScannerNew() {
     setScannedItems(updatedItems);
   };
 
+  const handleAddNewItem = () => {
+    setScannedItems([...scannedItems, { itemname: "", quantity: 1, price: 0, category: "Uncategorized" }]);
+  };
+
+  const handleDeleteItem = (index) => {
+    const filtered = scannedItems.filter((_, i) => i !== index);
+    setScannedItems(filtered);
+  };
+
+  const handleSaveAll = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/v1/products/bulk-add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(scannedItems),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.msg || "Failed to save");
+
+      setResultModalOpen(false);
+      navigate("/dashboard?tab=inventory");
+    } catch (err) {
+      alert("Error saving items: " + err.message);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
       <h1 className="text-3xl font-bold text-center mb-6">Receipt Scanner</h1>
@@ -105,7 +135,7 @@ export default function ReceiptScannerNew() {
         </div>
 
         {file && (
-          <img src={URL.createObjectURL(file)} alt="Preview" className="mt-4 max-h-72 rounded border" />
+          <img src={URL.createObjectURL(file)} alt="Preview" className="mt-4 max-h-72 rounded border object-cover" />
         )}
 
         {uploadProgress && (
@@ -126,11 +156,20 @@ export default function ReceiptScannerNew() {
       </Card>
 
       <Modal show={resultModalOpen} onClose={() => setResultModalOpen(false)} size="7xl">
-        <Modal.Header>Review Extracted Items</Modal.Header>
+        <Modal.Header>Manage Extracted Items</Modal.Header>
         <Modal.Body>
           <div className="space-y-4">
+            <Button size="xs" color="gray" onClick={handleAddNewItem} className="flex items-center gap-2">
+              <HiPlus /> Add New Item
+            </Button>
+
             {scannedItems.map((item, index) => (
-              <Card key={index} className="bg-white dark:bg-gray-800 shadow border dark:border-gray-700">
+              <Card key={index} className="bg-white dark:bg-gray-800 shadow border dark:border-gray-700 relative">
+                <div className="absolute top-2 right-2">
+                  <Button size="xs" color="failure" onClick={() => handleDeleteItem(index)}>
+                    <HiTrash />
+                  </Button>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div>
                     <Label htmlFor={`itemname-${index}`}>Item Name</Label>
@@ -158,7 +197,7 @@ export default function ReceiptScannerNew() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button color="success" onClick={() => setResultModalOpen(false)}>Save & Close</Button>
+          <Button color="success" onClick={handleSaveAll}>Save All to Inventory</Button>
         </Modal.Footer>
       </Modal>
     </div>
