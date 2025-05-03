@@ -72,6 +72,7 @@ import DashAddInventory from "../components/DashAddInventory";
 import ShoppingList from "../pages/ShoppingList";
 import DashUsers from "../components/DashUsers";
 import DashboardComp from "../components/DashboardComp";
+import HomeCreate from "./HomeCreate";
 
 export default function Dashboard() {
   const { currentUser } = useSelector((state) => state.user); // <-- you missed importing useSelector
@@ -93,9 +94,6 @@ export default function Dashboard() {
       <div className="md:w-56">
         <DashSidebar />
       </div>
-
-      {/* Main Content Area */}
-
         {tab === "inventory" && <DashInventory />}
         {tab === "add-inventory" && <DashAddInventory />}
         {tab === "category" && <DashCategory />}
@@ -106,8 +104,11 @@ export default function Dashboard() {
       {tab === "shopping-list" && <ShoppingList />}
 
       {tab === "users" && <DashUsers />}
+   {/* home create */}
+    {tab === "home" && <HomeCreate />}
 
       {tab === "dash" && <DashboardComp />}
     </div>
   );
+
 }

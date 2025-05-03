@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import {VERIFICATION_EMAIL_TEMPLATE,WELCOME_EMAIL_TEMPLATE,PASSWORD_RESET_REQUEST_TEMPLATE,PASSWORD_RESET_SUCCESS_TEMPLATE} from "./emailTemplates.js"
+import {VERIFICATION_EMAIL_TEMPLATE,WELCOME_EMAIL_TEMPLATE,PASSWORD_RESET_REQUEST_TEMPLATE,PASSWORD_RESET_SUCCESS_TEMPLATE,INVITATION_EMAIL_TEMPLATE} from "./emailTemplates.js"
 
 export const sendEmail = async (options) => {
   const transport = nodemailer.createTransport({
@@ -111,6 +111,56 @@ await transport.sendMail(mailOptions);
 
 
   }
+
+
+
+
+
+
+export const sendInvitationEmail = async (options) => {
+  const transport = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.EMAIL_USER, // Your email (e.g., 'your-email@gmail.com')
+      pass: process.env.EMAIL_PASS, // Your email password or app-specific password
+    },
+  });
+
+  const { email, homeId, token } = options; // Destructure options to get email, homeId, and token
+   const invitationURL = `${process.env.CLIENT_URL}/invite/accept/${token}`;// Construct the invitation URL with the token
+
+
+  const mailOptions = {
+    from: `"HomeStock" <homestock@gmail.com>`, // Sender's email
+    to: email, // Recipient's email
+    subject: "You're Invited to Join a Home", // Subject of the email
+    html: INVITATION_EMAIL_TEMPLATE.replace("{invitationURL}", invitationURL), // Replace placeholder with the actual URL
+    category: "Invitation Email",
+  };
+
+  try {
+    await transport.sendMail(mailOptions); // Send the email
+    console.log(`Invitation sent to ${email}`);
+  } catch (error) {
+    console.error("Error sending invitation email:", error);
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import { MailtrapTransport } from "mailtrap";
 
 // // Mailtrap API token

@@ -6,7 +6,10 @@ import {
   HiOutlineUserGroup,
   HiAnnotation,
   HiChartPie,
+  
 } from "react-icons/hi";
+
+import { FaHome } from "react-icons/fa"; 
 import { TbReportSearch } from "react-icons/tb";
 import { BiSolidCategory } from "react-icons/bi";
 import { useEffect, useState } from "react";
@@ -104,6 +107,16 @@ export default function DashSidebar() {
               as="div"
             >
               Shopping-List
+            </Sidebar.Item>
+          </Link>
+
+          <Link to="/dashboard?tab=home">
+            <Sidebar.Item
+              active={tab === "home"}
+              icon={FaHome} 
+              as="div"
+            >
+              Home
             </Sidebar.Item>
           </Link>
 

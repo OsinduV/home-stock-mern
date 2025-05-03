@@ -8,7 +8,7 @@ import userRoutes from "./routes/user.route.js"
 import ocrRoutes from "./routes/ocr.route.js"
 
 import shoppingListRoutes from "./routes/shoppingList.route.js";
-
+import homeRoute from "./routes/user.home.route.js"
 import cors from "cors"
 import productRouter from "./routes/products.route.js";
 import reportRouter from "./routes/reports.route.js";
@@ -36,6 +36,7 @@ app.use("/api/auth",authRouter);
 app.use("/api/user",userRoutes);
 app.use("/api/ocr",ocrRoutes);
 app.use("/api/shopping-list", shoppingListRoutes);
+app.use("/api/home",homeRoute);
 
 
 //Routes MIddleware
