@@ -27,12 +27,6 @@ import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 
 import { useSelector } from "react-redux";
 
-import ReceiptScanning from "./pages/ReceiptScanning.jsx";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
-import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
-
-import { useSelector } from "react-redux";
-
 export default function App() {
   
   const { currentUser, loading, error } = useSelector((state) => state.user);

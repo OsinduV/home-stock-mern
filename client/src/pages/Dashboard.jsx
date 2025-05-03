@@ -8,7 +8,6 @@
 // import DashCategory from "../components/DashCategory";
 // import DashAddInventory from "../components/DashAddInventory";
 
-
 // export default function Dashboard() {
 //     const { currentUser } = useSelector((state) => state.user);
 //   const location = useLocation();
@@ -22,19 +21,18 @@
 //     }
 // }, [location.search]);
 
-
 // return (
 //     <div className='min-h-screen flex flex-col md:flex-row'>
 //       <div className='md:w-56'>
 //         {/* Sidebar */}
-//          <DashSidebar /> 
+//          <DashSidebar />
 //       </div>
 //       {/* profile... */}
 //       {tab === 'profile' && <DashProfile />}
 //       {/* inventory */}
 //       {tab ==='inventory'&&<DashInventory/>}
 //       {/* addinventory */}
-//        {tab ==='add-inventory'&&<DashAddInventory/>} 
+//        {tab ==='add-inventory'&&<DashAddInventory/>}
 //       {/* category */}
 //       {tab ==='category'&&<DashCategory/>}
 //       {/* reports */}
@@ -45,7 +43,6 @@
 //     </div>
 //     {/* profile... */}
 
-    
 //     {tab === "profile" && <DashProfile />}
 //     {tab === "shopping-list" && <ShoppingList />}
 
@@ -56,28 +53,23 @@
 //     {/* users */}
 
 //     {tab === "dash" && <DashboardComp />}
-    
+
 //   </div>
 // );
 // }
-
 
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux"; // <-- you missed this import!
 
-import DashSidebar from '../components/DashSidebar';
-import DashProfile from '../components/DashProfile';
+import DashSidebar from "../components/DashSidebar";
+import DashProfile from "../components/DashProfile";
 
 import DashInventory from "../components/DashInventory";
 import DashReports from "../components/DashReports";
-import DashNotifications from "../components/DashNotifications";
 import DashCategory from "../components/DashCategory";
 import DashAddInventory from "../components/DashAddInventory";
-import ShoppingList from '../pages/ShoppingList';
-import DashUsers from "../components/DashUsers";
-import DashboardComp from "../components/DashboardComp";
-import ShoppingList from '../pages/ShoppingList';
+import ShoppingList from "../pages/ShoppingList";
 import DashUsers from "../components/DashUsers";
 import DashboardComp from "../components/DashboardComp";
 
@@ -96,39 +88,26 @@ export default function Dashboard() {
   }, [location.search]);
 
   return (
-    <div className='min-h-screen flex flex-col md:flex-row'>
+    <div className="min-h-screen flex flex-col md:flex-row">
       {/* Sidebar */}
-      <div className='md:w-56'>
+      <div className="md:w-56">
         <DashSidebar />
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 p-4">
-        {tab === 'profile' && <DashProfile />}
-        {tab === 'inventory' && <DashInventory />}
-        {tab === 'add-inventory' && <DashAddInventory />}
-        {tab === 'category' && <DashCategory />}
-        {tab === 'reports' && <DashReports />}
-        {/* {tab === 'notifications' && <DashNotifications />}
-        {tab === 'shopping-list' && <ShoppingList />} */}
-        {tab === 'users' && <DashUsers />}
-        {/* {tab === 'dash' && <DashboardComp />} */}
-      </div>
 
-    {/* profile... */}
+        {tab === "inventory" && <DashInventory />}
+        {tab === "add-inventory" && <DashAddInventory />}
+        {tab === "category" && <DashCategory />}
+        {tab === "reports" && <DashReports />}
+  
+      {tab === "profile" && <DashProfile />}
 
-    
-    {tab === "profile" && <DashProfile />}
-    {tab === "shopping-list" && <ShoppingList />}
+      {tab === "shopping-list" && <ShoppingList />}
 
-    {/* users */}
+      {tab === "users" && <DashUsers />}
 
-    {tab === "users" && <DashUsers />}
-
-    {/* users */}
-
-    {tab === "dash" && <DashboardComp />}
-    
-  </div>
-);
+      {tab === "dash" && <DashboardComp />}
+    </div>
+  );
 }

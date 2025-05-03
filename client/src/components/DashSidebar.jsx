@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import {signOutUserSuccess} from "../redux/user/userSlice"
+import { signOutUserSuccess } from "../redux/user/userSlice";
 import { FaShoppingBasket } from "react-icons/fa";
 
 export default function DashSidebar() {
@@ -44,13 +44,11 @@ export default function DashSidebar() {
       console.log(error.message);
     }
   };
-  
- 
+
   return (
     <Sidebar className="w-full md:w-56">
       <Sidebar.Items>
         <Sidebar.ItemGroup className="flex flex-col gap-1">
-       
           {currentUser && currentUser.isAdmin && (
             <Link to="/dashboard?tab=dash">
               <Sidebar.Item
@@ -88,18 +86,16 @@ export default function DashSidebar() {
               Profile
             </Sidebar.Item>
           </Link>
-          
-          
 
-          <Link to ="/dashboard?tab=inventory">
-          <Sidebar.Item
-           active={tab ==="inventory"}
-           icon={HiDocumentText}
-           as="div"
-          >Inventory
-          </Sidebar.Item>
+          <Link to="/dashboard?tab=inventory">
+            <Sidebar.Item
+              active={tab === "inventory"}
+              icon={HiDocumentText}
+              as="div"
+            >
+              Inventory
+            </Sidebar.Item>
           </Link>
-
 
           <Link to="/dashboard?tab=shopping-list">
             <Sidebar.Item
@@ -110,18 +106,6 @@ export default function DashSidebar() {
               Shopping-List
             </Sidebar.Item>
           </Link>
-
-
-          <Link to="/dashboard?tab=shopping-list">
-            <Sidebar.Item
-              active={tab === "shopping-list"}
-              icon={FaShoppingBasket}
-              as="div"
-            >
-              Shopping-List
-            </Sidebar.Item>
-          </Link>
-
 
           <Sidebar.Item
             icon={HiArrowSmRight}
@@ -129,36 +113,40 @@ export default function DashSidebar() {
             onClick={handleSignout}
           >
             Sign Out
-
           </Sidebar.Item>
-          
+
           <Link to="/dashboard?tab=add-inventory">
-            <Sidebar.Item active={tab === "addinventory"} icon={HiDocumentText} as="div">
+            <Sidebar.Item
+              active={tab === "addinventory"}
+              icon={HiDocumentText}
+              as="div"
+            >
               ADD Inventory
             </Sidebar.Item>
           </Link>
 
           <Link to="/dashboard?tab=category">
-          <Sidebar.Item 
-          active = {tab ==="category"}
-          icon={BiSolidCategory} 
-          className="cursor-pointer" 
-          as = "div">
-            Category
-          </Sidebar.Item>
+            <Sidebar.Item
+              active={tab === "category"}
+              icon={BiSolidCategory}
+              className="cursor-pointer"
+              as="div"
+            >
+              Category
+            </Sidebar.Item>
           </Link>
 
-          <Link to = "/dashboard?tab=reports">
-          <Sidebar.Item 
-          active = {tab === "reports"}
-          icon={TbReportSearch} 
-          className="cursor-pointer"
-          as="div"
-           >
-            Reports
-          </Sidebar.Item>
+          <Link to="/dashboard?tab=reports">
+            <Sidebar.Item
+              active={tab === "reports"}
+              icon={TbReportSearch}
+              className="cursor-pointer"
+              as="div"
+            >
+              Reports
+            </Sidebar.Item>
           </Link>
-          
+
           {/* <Link to="/dashboard?tab=notifications">
           <Sidebar.Item 
           active = {tab ==="notifications"}
@@ -168,9 +156,6 @@ export default function DashSidebar() {
             Notifications
           </Sidebar.Item>
           </Link> */}
-
-        
-
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>

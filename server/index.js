@@ -17,7 +17,6 @@ import categoryRouter from "./routes/category.route.js";
 
 const app = express();
 
-const app = express();
 
 dotenv.config();
 app.use(
