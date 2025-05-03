@@ -21,7 +21,7 @@ import DashAddCategory from "./components/DashAddCategory.jsx";
 import DashUpdateCategory from "./components/DashUpdateCategory.jsx";
 
 
-import ReceiptScanning from "./pages/ReceiptScanning.jsx";
+import ReceiptScanning from "./pages/receiptScanner/ReceiptScanning.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
 import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 
